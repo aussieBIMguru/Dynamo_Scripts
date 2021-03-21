@@ -1,0 +1,629 @@
+{
+  "Uuid": "b1bf2229-4948-4d35-87c0-7e8bee314edd",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Demo script",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "900;",
+      "Id": "e21e2f761b42429abf72fa7bd6609771",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8f802de560074dc9a0ac4389c79a8b13",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.Math.RandomList@int",
+      "Id": "4457374ce3004dd3a17fc2fe2f2aa696",
+      "Inputs": [
+        {
+          "Id": "9160901f1ff74ed8a4fd391edfdd09bd",
+          "Name": "amount",
+          "Description": "Amount of random numbers the result list will contain.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ba39d650f96e4e0fb0b83bfea79b042e",
+          "Name": "number",
+          "Description": "List of random numbers between 0 and 1.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Produces a list containing the given amount of random doubles in the range of [0, 1).\n\nMath.RandomList (amount: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.Math.Round@double",
+      "Id": "696863c744c5407d95ce26f0df32bca7",
+      "Inputs": [
+        {
+          "Id": "f6184d84d46045ed80500ff8315c1e16",
+          "Name": "number",
+          "Description": "Number to round.\n\ndouble",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c46e77affd954497a1fe61b6b0b1786e",
+          "Name": "number",
+          "Description": "Integral value closes to the number.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Rounds a number to the closest integral value. Note that this method returns a double-precision floating-point number instead of an integral type.\n\nMath.Round (number: double): double"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Chop@var[]..[],int[]",
+      "Id": "2a5daafd7ff14b0ca43cec32b4c5bffa",
+      "Inputs": [
+        {
+          "Id": "c84927891636436e8dedca53d4c77623",
+          "Name": "list",
+          "Description": "List to chop into sublists\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "cb58abef57e7402092593747f205b069",
+          "Name": "lengths",
+          "Description": "Lengths of consecutive sublists to be created from the input list\n\nint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3fddca902f4e4b0aaae9a4a89fb70c26",
+          "Name": "lists",
+          "Description": "Sublists created from the list",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Chop a list into a set of consecutive sublists with the specified lengths. List division begins at the top of the list.\n\nList.Chop (list: var[]..[], lengths: int[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "90;",
+      "Id": "cea3b7933c4e4a468a0e8725bfa50f76",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "305d98b6aa7a45ada666be99a2ec62e5",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "def tolist(input):\r\n\tresult = input if isinstance(input, list) else [input]\r\n\treturn result\r\n\t\r\ndef splitter(seq, splitval = 0):\r\n\tseq.append(splitval)\r\n\tgroup = []\r\n\tfor num in seq:\r\n\t\tif num != splitval:\r\n\t\t\tgroup.append(num)\r\n\t\telif group:\r\n\t\t\tyield group\r\n\t\t\tgroup = []\r\n\r\nvalues = tolist(IN[0])\r\nresult = []\r\n\r\nfor n in values:\r\n\tresult.append(list(splitter(n)))\r\n\r\nOUT = result",
+      "VariableInputPorts": true,
+      "Id": "ddf04c1f14a64692838a5ef1c54f41d8",
+      "Inputs": [
+        {
+          "Id": "b6e32b112668426fb306011399f14b5e",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e1c5c2c4e758449b8f7edfb81d2f2fd4",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5480a0842e004436a5cc0e2d9b5b7c2e",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "0;",
+      "Id": "643bc7848ad442de8fef2abab6055a87",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4f6622233c7b45e58d60edb916c39066",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Count@var[]..[]",
+      "Id": "37830550d2bf4a9c9a7d0c0738ce331b",
+      "Inputs": [
+        {
+          "Id": "c0469b234f134fcab71352f60a71bb83",
+          "Name": "list",
+          "Description": "List to get the item count of.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 3,
+          "UseLevels": true,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d9abd80e474a4184954d02af1ff3a076",
+          "Name": "count",
+          "Description": "List length.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the number of items stored in the given list.\n\nList.Count (list: var[]..[]): int"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Count@var[]..[]",
+      "Id": "42a120d765274c43ba041b5480aeccd5",
+      "Inputs": [
+        {
+          "Id": "135d29705d454888ba5a371c18634b51",
+          "Name": "list",
+          "Description": "List to get the item count of.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c25ea2a89abf417eb5d0e7b0a253e610",
+          "Name": "count",
+          "Description": "List length.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the number of items stored in the given list.\n\nList.Count (list: var[]..[]): int"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "x/4;",
+      "Id": "6b29ab9ff0e74e9987a8d205fa65d509",
+      "Inputs": [
+        {
+          "Id": "f86989e6c4d14afd91928ffd7760403d",
+          "Name": "x",
+          "Description": "x",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bc014669c55746e0b6e29a3d5d116964",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.Math.Floor@double",
+      "Id": "83f520455d0f4ed9ad34abf5ae5fc529",
+      "Inputs": [
+        {
+          "Id": "32fc0ff5f2bd4caf8852d9dea0f2d513",
+          "Name": "number",
+          "Description": "Number to round up.\n\ndouble",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4f242f29b88e4a8f925952394404d1c7",
+          "Name": "integer",
+          "Description": "First integer smaller than the number.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the first integer smaller than the number.\n\nMath.Floor (number: double): int"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Chop@var[]..[],int[]",
+      "Id": "02b0a7ec37bd414ba156e45c7fb2f1e7",
+      "Inputs": [
+        {
+          "Id": "2a8efbc593214fe58a5c461a68765442",
+          "Name": "list",
+          "Description": "List to chop into sublists\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "891c24e7c8af434c9daf484c754cdd55",
+          "Name": "lengths",
+          "Description": "Lengths of consecutive sublists to be created from the input list\n\nint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ae33e4d468754905badb32bd9a8c929d",
+          "Name": "lists",
+          "Description": "Sublists created from the list",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Chop a list into a set of consecutive sublists with the specified lengths. List division begins at the top of the list.\n\nList.Chop (list: var[]..[], lengths: int[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.Math.Sum@double[]",
+      "Id": "f5a1eeb59bab4914aca7a0596dd66419",
+      "Inputs": [
+        {
+          "Id": "a4032e70e005487db5953ab46414d6c3",
+          "Name": "values",
+          "Description": "The numbers to sum\n\ndouble[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "975e622651a34fb2954efe336fde0ca7",
+          "Name": "sum",
+          "Description": "The sum of the values",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Find the sum of a series of numbers\n\nMath.Sum (values: double[]): double"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "8f802de560074dc9a0ac4389c79a8b13",
+      "End": "9160901f1ff74ed8a4fd391edfdd09bd",
+      "Id": "f58306c0092042689183bdf0544f409d"
+    },
+    {
+      "Start": "ba39d650f96e4e0fb0b83bfea79b042e",
+      "End": "f6184d84d46045ed80500ff8315c1e16",
+      "Id": "043c6de14f7c4a2394d713b5c4ba3e45"
+    },
+    {
+      "Start": "c46e77affd954497a1fe61b6b0b1786e",
+      "End": "c84927891636436e8dedca53d4c77623",
+      "Id": "3d17e67db38047f4b319eebe6ec88fc4"
+    },
+    {
+      "Start": "3fddca902f4e4b0aaae9a4a89fb70c26",
+      "End": "b6e32b112668426fb306011399f14b5e",
+      "Id": "bdf3b4f280f74e1386d07d83a3bd6e34"
+    },
+    {
+      "Start": "305d98b6aa7a45ada666be99a2ec62e5",
+      "End": "cb58abef57e7402092593747f205b069",
+      "Id": "8bbd8d8aab194deba8ed50e021fb87fd"
+    },
+    {
+      "Start": "5480a0842e004436a5cc0e2d9b5b7c2e",
+      "End": "c0469b234f134fcab71352f60a71bb83",
+      "Id": "782b957808d24469b142e28ed9be3ff0"
+    },
+    {
+      "Start": "5480a0842e004436a5cc0e2d9b5b7c2e",
+      "End": "135d29705d454888ba5a371c18634b51",
+      "Id": "34a6e7da76a645deb10421f71c86a35a"
+    },
+    {
+      "Start": "4f6622233c7b45e58d60edb916c39066",
+      "End": "e1c5c2c4e758449b8f7edfb81d2f2fd4",
+      "Id": "db5f1ef87a714bb08ea9030a465aadae"
+    },
+    {
+      "Start": "d9abd80e474a4184954d02af1ff3a076",
+      "End": "891c24e7c8af434c9daf484c754cdd55",
+      "Id": "bd39185973c1494fad3d7b6c83d736b8"
+    },
+    {
+      "Start": "c25ea2a89abf417eb5d0e7b0a253e610",
+      "End": "f86989e6c4d14afd91928ffd7760403d",
+      "Id": "c2642de1b576494b9cfc255cdd65d811"
+    },
+    {
+      "Start": "bc014669c55746e0b6e29a3d5d116964",
+      "End": "32fc0ff5f2bd4caf8852d9dea0f2d513",
+      "Id": "3a147571906a4c78b659b265eda52d1a"
+    },
+    {
+      "Start": "4f242f29b88e4a8f925952394404d1c7",
+      "End": "2a8efbc593214fe58a5c461a68765442",
+      "Id": "238547b9990a4f2f9d924a29a43c36c4"
+    },
+    {
+      "Start": "ae33e4d468754905badb32bd9a8c929d",
+      "End": "a4032e70e005487db5953ab46414d6c3",
+      "Id": "fa8c3ec1808f47c795f82dcc66cd4b67"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "e21e2f761b42429abf72fa7bd6609771",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 248.0,
+        "Y": 274.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Math.RandomList",
+        "Id": "4457374ce3004dd3a17fc2fe2f2aa696",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 362.0,
+        "Y": 270.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Math.Round",
+        "Id": "696863c744c5407d95ce26f0df32bca7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 608.0,
+        "Y": 269.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Chop",
+        "Id": "2a5daafd7ff14b0ca43cec32b4c5bffa",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 946.0,
+        "Y": 268.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "cea3b7933c4e4a468a0e8725bfa50f76",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 747.0,
+        "Y": 359.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "ddf04c1f14a64692838a5ef1c54f41d8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1272.9480486915736,
+        "Y": 296.46871399320725
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "643bc7848ad442de8fef2abab6055a87",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1051.877216129531,
+        "Y": 387.00590039175512
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Count",
+        "Id": "37830550d2bf4a9c9a7d0c0738ce331b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1552.1003623817996,
+        "Y": 391.51948522328257
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Count",
+        "Id": "42a120d765274c43ba041b5480aeccd5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1547.652889798911,
+        "Y": 269.12514402717119
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "6b29ab9ff0e74e9987a8d205fa65d509",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1747.8193644293492,
+        "Y": 273.53010592844174
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Math.Floor",
+        "Id": "83f520455d0f4ed9ad34abf5ae5fc529",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1862.655277816594,
+        "Y": 273.12042371376708
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Chop",
+        "Id": "02b0a7ec37bd414ba156e45c7fb2f1e7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2168.6812674012981,
+        "Y": 361.11098308695887
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Math.Sum",
+        "Id": "f5a1eeb59bab4914aca7a0596dd66419",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2396.4215387201475,
+        "Y": 360.463993679803
+      }
+    ],
+    "Annotations": [],
+    "X": -7.4228691955438535,
+    "Y": 110.67468596040888,
+    "Zoom": 0.55152031146487834
+  }
+}
