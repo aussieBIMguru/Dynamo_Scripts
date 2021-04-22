@@ -1,0 +1,466 @@
+{
+  "Uuid": "a51ba6a9-4988-4356-a7f6-1c34128aab2b",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "ABG_200328_AreaBoundaries",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
+      "SelectedIndex": 428,
+      "SelectedString": "OST_Rooms",
+      "NodeType": "ExtensionNode",
+      "Id": "366309b6e26247da9e98db801a4f4438",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b8245dc731dc433cac7f9e28458fa34b",
+          "Name": "Category",
+          "Description": "The selected Category.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All built-in categories."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Levels, DSRevitNodesUI",
+      "SelectedIndex": 6,
+      "SelectedString": "LEVEL 1A",
+      "NodeType": "ExtensionNode",
+      "Id": "5fb181ac21fe4643ab0920680e78db75",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b87431a5b55e4e0ab431273e51d054f5",
+          "Name": "Levels",
+          "Description": "The selected Levels",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a level in the active document"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "archilab.Revit.Selection.Select.ByCategoryAndLevel@Revit.Elements.Category,Revit.Elements.Element",
+      "Id": "a57b133ecdc64ce18204e6c7f3d3b255",
+      "Inputs": [
+        {
+          "Id": "b6712e03e6b746859720d104dd6e0225",
+          "Name": "category",
+          "Description": "Category to filter for.\n\nCategory",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "973a01b484224ddeb0f5a1a2c98a1051",
+          "Name": "level",
+          "Description": "Level to filter for.\n\nElement",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2a3b42c9999a4cd6a6601c35e14748cf",
+          "Name": "Element",
+          "Description": "Elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Select Elements by Level and Category.\n\nSelect.ByCategoryAndLevel (category: Category, level: Element): Element[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "d7d8c98e-51dc-401d-ba0f-750f016d064b",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "6d180a463deb483884112a1187fff2d1",
+      "Inputs": [
+        {
+          "Id": "2ccc0745c9e140e8b56e08714af1b20d",
+          "Name": "rooms",
+          "Description": "A room or list of rooms.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b21ba053b2f84e3c83f1fde0b5abb975",
+          "Name": "curves",
+          "Description": "Room boundary curves.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "For a room or list of rooms, return all boundary (and internal) curves. The curves will be based on the currently nominated project room boundary settings."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Flatten@var[]..[],int",
+      "Id": "2f91e95ec2bd4b49aa0a7ee15fbe8d00",
+      "Inputs": [
+        {
+          "Id": "e81c2cdd1f7d45e0b6e645b96603d18b",
+          "Name": "list",
+          "Description": "List to flatten.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "35758449498b4bc3b84f970ec1074319",
+          "Name": "amt",
+          "Description": "Layers of nesting to remove.\n\nint\nDefault value : -1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "84ccfd4cada14a6aa78de79460c1e19e",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Flattens a nested list of lists by a certain amount.\n\nList.Flatten (list: var[]..[], amt: int = -1): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Application.Document.Current",
+      "Id": "12346a250a9848c9b7fe156c160ec58e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4d3253c0903d4e91922f7b08e2d43499",
+          "Name": "Document",
+          "Description": "Document",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the current document\n\nDocument.Current: Document"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Application.Document.ActiveView",
+      "Id": "2057fcf796cf4dd48859ab6baea0bebd",
+      "Inputs": [
+        {
+          "Id": "cde9567792e44a02b92ad631cb6c47d6",
+          "Name": "document",
+          "Description": "Revit.Application.Document",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1b3610e3a93d4d2f9def28b1c58aa60f",
+          "Name": "View",
+          "Description": "View",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the active view for the document\n\nDocument.ActiveView: View"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "9a56fed4-fb58-477b-9cb5-c09b5f7fe039",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "68b9ed2fadf8407f8727c7c947ede778",
+      "Inputs": [
+        {
+          "Id": "0c7046771b1141c9b9214695ce2957e9",
+          "Name": "view",
+          "Description": "The view to place the lines in.\n\nvar\nDefault value : Revit.Application.Document.Current.ActiveView",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fb494e2bafa943509d690d115504d234",
+          "Name": "curves",
+          "Description": "Curves to base the area\nseparation lines from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7f9c0a2403414703b7b49b9b0ed23538",
+          "Name": "areas",
+          "Description": "The model curves as elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Given a list of Dynamo curves, the node generates area boundary lines along them in the given view. For convenience of iterability, this node flattens the curve list by default."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "b8245dc731dc433cac7f9e28458fa34b",
+      "End": "b6712e03e6b746859720d104dd6e0225",
+      "Id": "00d653fbe96f48ccaad227a4a457b10f"
+    },
+    {
+      "Start": "b87431a5b55e4e0ab431273e51d054f5",
+      "End": "973a01b484224ddeb0f5a1a2c98a1051",
+      "Id": "6e46f384cc804be8b89f51312cccc033"
+    },
+    {
+      "Start": "2a3b42c9999a4cd6a6601c35e14748cf",
+      "End": "2ccc0745c9e140e8b56e08714af1b20d",
+      "Id": "37aad96613b84d13a3c452b27bb6229f"
+    },
+    {
+      "Start": "b21ba053b2f84e3c83f1fde0b5abb975",
+      "End": "e81c2cdd1f7d45e0b6e645b96603d18b",
+      "Id": "897569906e954b19b0fb5f404a4898b3"
+    },
+    {
+      "Start": "84ccfd4cada14a6aa78de79460c1e19e",
+      "End": "fb494e2bafa943509d690d115504d234",
+      "Id": "25dee4ac74c7412aa07ba3409805ad01"
+    },
+    {
+      "Start": "4d3253c0903d4e91922f7b08e2d43499",
+      "End": "cde9567792e44a02b92ad631cb6c47d6",
+      "Id": "42e44cb075174ba3827bde44a1046e44"
+    },
+    {
+      "Start": "1b3610e3a93d4d2f9def28b1c58aa60f",
+      "End": "0c7046771b1141c9b9214695ce2957e9",
+      "Id": "62fc9574de224cddb36efad94ea72639"
+    }
+  ],
+  "Dependencies": [
+    "d7d8c98e-51dc-401d-ba0f-750f016d064b",
+    "9a56fed4-fb58-477b-9cb5-c09b5f7fe039"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "archi-lab.net",
+      "Version": "2021.25.21",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "a57b133ecdc64ce18204e6c7f3d3b255"
+      ]
+    },
+    {
+      "Name": "Crumple",
+      "Version": "2021.4.19",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "6d180a463deb483884112a1187fff2d1",
+        "68b9ed2fadf8407f8727c7c947ede778"
+      ]
+    }
+  ],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 3905.4328713869272,
+      "EyeY": 28471.029541726777,
+      "EyeZ": 21421.448033076809,
+      "LookX": 4510.1100973630728,
+      "LookY": -31471.029541726777,
+      "LookZ": -20030.264927608059,
+      "UpX": 0.15396537167082477,
+      "UpY": 0.71325044915418223,
+      "UpZ": -0.68378977844628741
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Categories",
+        "Id": "366309b6e26247da9e98db801a4f4438",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 158.0,
+        "Y": 128.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Levels",
+        "Id": "5fb181ac21fe4643ab0920680e78db75",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 176.0,
+        "Y": 215.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select.ByCategoryAndLevel",
+        "Id": "a57b133ecdc64ce18204e6c7f3d3b255",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 399.0,
+        "Y": 150.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© RoomBoundaries",
+        "Id": "6d180a463deb483884112a1187fff2d1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 667.0,
+        "Y": 152.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Flatten",
+        "Id": "2f91e95ec2bd4b49aa0a7ee15fbe8d00",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 917.0,
+        "Y": 154.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Document.Current",
+        "Id": "12346a250a9848c9b7fe156c160ec58e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 737.0,
+        "Y": 10.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Document.ActiveView",
+        "Id": "2057fcf796cf4dd48859ab6baea0bebd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 898.0,
+        "Y": 9.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© AreaLinesByCurves",
+        "Id": "68b9ed2fadf8407f8727c7c947ede778",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1249.157188033176,
+        "Y": 72.785017600211035
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "83267ef53dcc40c3b7f4c214f3b98a13",
+        "Title": "Custom Node: archilab v.2021.25.21",
+        "Nodes": [],
+        "Left": 406.51224876052015,
+        "Top": 107.98775123947982,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "07860ea682fb4580b98ea4644a4b519a",
+        "Title": "Custom Node: Crumple v.2021.4.19",
+        "Nodes": [],
+        "Left": 660.56092963383981,
+        "Top": 110.56092963383985,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a6dfe3cea7304d4e9462322f0832040d",
+        "Title": "Custom Node: Crumple v.2021.4.19",
+        "Nodes": [],
+        "Left": 1241.6449392726558,
+        "Top": 30.272768839690855,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 79.049961344674443,
+    "Y": 142.94712621511559,
+    "Zoom": 0.8887892282971559
+  }
+}
