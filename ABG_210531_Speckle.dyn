@@ -1,0 +1,727 @@
+{
+  "Uuid": "9b4cb27d-f37b-424d-bc51-d073b70a130e",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Speckle dynamo",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Speckle.ConnectorDynamo.SendNode.Send, SpeckleConnectorDynamo",
+      "AutoUpdate": false,
+      "ExpiredCount": "",
+      "NodeType": "ExtensionNode",
+      "Id": "ecaef918dee54293848b8b63cc600a12",
+      "Inputs": [
+        {
+          "Id": "124705994a4443dc959abbfb26a590dd",
+          "Name": "data",
+          "Description": "The data to send",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6b76be9cf93247c5b02e937c5bd10ebe",
+          "Name": "stream",
+          "Description": "The stream or streams to send to",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "278618831ab2467eab1fb29b8e475960",
+          "Name": "message",
+          "Description": "Commit message. If left blank, one will be generated for you.",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7608d1fe20594a98b748b5931e7677c9",
+          "Name": "stream",
+          "Description": "Stream or streams pointing to the created commit",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Send data to a Speckle server"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "https://speckle.xyz/streams/262ebe3fac",
+      "Id": "df540bac7e4f40518f33d86774f896b1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cd2b6a9529864c1b9721f3757f47d34e",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "Testing 1",
+      "Id": "130cf71a06854b18a37651ce5828f346",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1366e564c15448a48db0855906e18e14",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "0f02572a-0625-4873-a564-a255a9c750c1",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "2522c6f2a2e948b5b14243698bf1852e",
+      "Inputs": [
+        {
+          "Id": "91726291760e425ea3c532ccf44e1f46",
+          "Name": "Refresh",
+          "Description": "Toggle to refresh\n\nbool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cf46f9ad37f14a70bbb905661cdec19b",
+          "Name": "placed",
+          "Description": "All rooms placed in the model",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f65dd5832fac4dddb3015ca920cb1399",
+          "Name": "unplaced",
+          "Description": "All unplaced rooms",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Collects all placed/unplaced rooms as two lists."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.GetParameterValueByName@string",
+      "Id": "77e472370fcd404aaeccec3208c222b3",
+      "Inputs": [
+        {
+          "Id": "ca7b3df404294835824192b0e356439b",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 1,
+          "UseLevels": true,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f020c17a31c54b468a03b237751a7978",
+          "Name": "parameterName",
+          "Description": "The name of the parameter whose value you want to obtain.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5e7f0fb67fa04c58bd652b130917438a",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Longest",
+      "Description": "Get the value of one of the element's parameters.\n\nElement.GetParameterValueByName (parameterName: string): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "[\"Name\",\n\"Number\",\n\"Area\"];",
+      "Id": "a9c568f83e8143258c3133ac23c4bbe1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a810d3683bd04b968cbde6ffdeb87214",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.Id",
+      "Id": "feaf698a663141ca89966a76ab463557",
+      "Inputs": [
+        {
+          "Id": "3aab13c295d64d18ba32b6d7eac9ba6b",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c2ed35a05644494b8c2076670b2eec4b",
+          "Name": "int",
+          "Description": "int",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the Element Id for this element\n\nElement.Id: int"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.AddItemToFront@var[]..[],var[]..[]",
+      "Id": "a3d2db9e01fe4495b3a131ef1c65582c",
+      "Inputs": [
+        {
+          "Id": "c70ea2c5eca7487ab3d629f0103ed22a",
+          "Name": "item",
+          "Description": "Item to be added. Item could be an object or a list.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 1,
+          "UseLevels": true,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d991bd7bc1c441668b10ae0f5f0b6eec",
+          "Name": "list",
+          "Description": "List to add on to.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d1675afb142f44898e2d71ea108953e5",
+          "Name": "list",
+          "Description": "New list.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Adds an item to the beginning of a list.\n\nList.AddItemToFront (item: var[]..[], list: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.AddItemToFront@var[]..[],var[]..[]",
+      "Id": "e4c2cc7a3fc843479b2ce6236afd0588",
+      "Inputs": [
+        {
+          "Id": "6a99d323d5654199bef40d0d09461514",
+          "Name": "item",
+          "Description": "Item to be added. Item could be an object or a list.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 1,
+          "UseLevels": true,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "97d25a26b45b4b179a72559a9b5a4784",
+          "Name": "list",
+          "Description": "List to add on to.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "73fba85529894e7cb92ec351f3719c89",
+          "Name": "list",
+          "Description": "New list.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Adds an item to the beginning of a list.\n\nList.AddItemToFront (item: var[]..[], list: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Speckle.ConnectorDynamo.SendNode.Send, SpeckleConnectorDynamo",
+      "AutoUpdate": false,
+      "ExpiredCount": "",
+      "NodeType": "ExtensionNode",
+      "Id": "d1f1ce154b6a4a88bc25c3928437939b",
+      "Inputs": [
+        {
+          "Id": "d3548ec16f084081b317baff80716b4d",
+          "Name": "data",
+          "Description": "The data to send",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a17bc2c1b63b44f1814ba3100210bee8",
+          "Name": "stream",
+          "Description": "The stream or streams to send to",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ae7db9213d1a483a8d3ca05b3ef3f7d4",
+          "Name": "message",
+          "Description": "Commit message. If left blank, one will be generated for you.",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "56cc746cc5e54b84a0eaf167c8b7d375",
+          "Name": "stream",
+          "Description": "Stream or streams pointing to the created commit",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Send data to a Speckle server"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "https://speckle.xyz/streams/47de40eb13",
+      "Id": "59bf827f71ff4dc285dfa85d75769bbf",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "dcccaf685533412293d5460eb1ebd5b3",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "Testing 1",
+      "Id": "df304446e258469784b74a2e4189dad3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "958675ed4e464cd0b5c21596b97bc0dc",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Speckle.ConnectorDynamo.Functions.Stream.Get@var[]..[],var",
+      "Id": "0e4b303e7da5451c8825f02c9b09056e",
+      "Inputs": [
+        {
+          "Id": "133d3f27b3c345c5b51b06f3c46e5114",
+          "Name": "stream",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fd22238f3b124104a6c7523354679fff",
+          "Name": "account",
+          "Description": "var\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "36a44411293e47efaef5a6b7b6eed959",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Stream.Get (stream: var[]..[], account: var = null): var[]..[]"
+    },
+    {
+      "ConcreteType": "Speckle.ConnectorDynamo.AccountsNode.Accounts, SpeckleConnectorDynamo",
+      "SelectedUserId": "35d41a8684",
+      "NodeType": "ExtensionNode",
+      "Id": "27bbb1ccd78d42db9d37129021cc76dd",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6a70e48153ae4ec4abb020a35f728d7a",
+          "Name": "account",
+          "Description": "Selected account",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a Speckle account"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "cd2b6a9529864c1b9721f3757f47d34e",
+      "End": "133d3f27b3c345c5b51b06f3c46e5114",
+      "Id": "28e111bf02604756a028c1fd9acf7ffd"
+    },
+    {
+      "Start": "1366e564c15448a48db0855906e18e14",
+      "End": "278618831ab2467eab1fb29b8e475960",
+      "Id": "d21ac453977140c4856e0e707dd2e9f4"
+    },
+    {
+      "Start": "cf46f9ad37f14a70bbb905661cdec19b",
+      "End": "ca7b3df404294835824192b0e356439b",
+      "Id": "ba031bdae7624a4eb8ce6d7bb1eb76bd"
+    },
+    {
+      "Start": "cf46f9ad37f14a70bbb905661cdec19b",
+      "End": "3aab13c295d64d18ba32b6d7eac9ba6b",
+      "Id": "a0171b0bdb724ce481afc1741dcc64cc"
+    },
+    {
+      "Start": "cf46f9ad37f14a70bbb905661cdec19b",
+      "End": "6a99d323d5654199bef40d0d09461514",
+      "Id": "3b704c107e0644f989c9d23bc07aa2ae"
+    },
+    {
+      "Start": "5e7f0fb67fa04c58bd652b130917438a",
+      "End": "d991bd7bc1c441668b10ae0f5f0b6eec",
+      "Id": "74cae17a976d4d97955d731d0dae1810"
+    },
+    {
+      "Start": "a810d3683bd04b968cbde6ffdeb87214",
+      "End": "f020c17a31c54b468a03b237751a7978",
+      "Id": "29050e802609455996160771b654bf08"
+    },
+    {
+      "Start": "c2ed35a05644494b8c2076670b2eec4b",
+      "End": "c70ea2c5eca7487ab3d629f0103ed22a",
+      "Id": "e82b8f9f7e8f47b19e36e1a893fb003c"
+    },
+    {
+      "Start": "d1675afb142f44898e2d71ea108953e5",
+      "End": "97d25a26b45b4b179a72559a9b5a4784",
+      "Id": "5882ba1e4b59438796b75e627b18212d"
+    },
+    {
+      "Start": "d1675afb142f44898e2d71ea108953e5",
+      "End": "124705994a4443dc959abbfb26a590dd",
+      "Id": "8c6badd93176448aaf28c529075d5527"
+    },
+    {
+      "Start": "73fba85529894e7cb92ec351f3719c89",
+      "End": "d3548ec16f084081b317baff80716b4d",
+      "Id": "704727f1d71143f9a09d78ff927cdb14"
+    },
+    {
+      "Start": "dcccaf685533412293d5460eb1ebd5b3",
+      "End": "a17bc2c1b63b44f1814ba3100210bee8",
+      "Id": "c8337bbd1ef5455695b19ba730700c7d"
+    },
+    {
+      "Start": "958675ed4e464cd0b5c21596b97bc0dc",
+      "End": "ae7db9213d1a483a8d3ca05b3ef3f7d4",
+      "Id": "bf45559692a54130b88ff3c75caeb747"
+    },
+    {
+      "Start": "36a44411293e47efaef5a6b7b6eed959",
+      "End": "6b76be9cf93247c5b02e937c5bd10ebe",
+      "Id": "95283289c6e84c20b295ff3078a8364b"
+    },
+    {
+      "Start": "6a70e48153ae4ec4abb020a35f728d7a",
+      "End": "fd22238f3b124104a6c7523354679fff",
+      "Id": "244bd112601f40beb34eb897b45c42e0"
+    }
+  ],
+  "Dependencies": [
+    "0f02572a-0625-4873-a564-a255a9c750c1"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "SpeckleDynamo2",
+      "Version": "2.0.0",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "ecaef918dee54293848b8b63cc600a12",
+        "d1f1ce154b6a4a88bc25c3928437939b",
+        "0e4b303e7da5451c8825f02c9b09056e",
+        "27bbb1ccd78d42db9d37129021cc76dd"
+      ]
+    },
+    {
+      "Name": "Crumple",
+      "Version": "2021.5.27",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "2522c6f2a2e948b5b14243698bf1852e"
+      ]
+    }
+  ],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -64748.210256392238,
+      "EyeY": 95582.451086952628,
+      "EyeZ": 125048.69029746983,
+      "LookX": 76557.546193892238,
+      "LookY": -94207.451086952628,
+      "LookZ": -124008.69029746983,
+      "UpX": 0.18396876325972822,
+      "UpY": 0.93667218924839823,
+      "UpZ": -0.2979944698032167
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Send",
+        "Id": "ecaef918dee54293848b8b63cc600a12",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 529.52734561584248,
+        "Y": 101.50966099067614
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "df540bac7e4f40518f33d86774f896b1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -343.26171331401758,
+        "Y": 124.57918915872159
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "130cf71a06854b18a37651ce5828f346",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 321.68514373338792,
+        "Y": 254.85972673903944
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© RoomsByPlacement",
+        "Id": "2522c6f2a2e948b5b14243698bf1852e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -816.97587764198954,
+        "Y": -284.70008899358623
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.GetParameterValueByName",
+        "Id": "77e472370fcd404aaeccec3208c222b3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -352.65618264995135,
+        "Y": -15.926656261154164
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "a9c568f83e8143258c3133ac23c4bbe1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -617.895760784886,
+        "Y": 13.962839462363945
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.Id",
+        "Id": "feaf698a663141ca89966a76ab463557",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -273.60894350682292,
+        "Y": -131.75825421346102
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.AddItemToFront",
+        "Id": "a3d2db9e01fe4495b3a131ef1c65582c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 31.622970016147974,
+        "Y": -87.93008201529085
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.AddItemToFront",
+        "Id": "e4c2cc7a3fc843479b2ce6236afd0588",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 375.44877975328018,
+        "Y": -284.33346346613519
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Send",
+        "Id": "d1f1ce154b6a4a88bc25c3928437939b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 910.03700660651884,
+        "Y": -284.21860178030272
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "59bf827f71ff4dc285dfa85d75769bbf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 651.5022036515395,
+        "Y": -224.93670520458261
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "df304446e258469784b74a2e4189dad3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 714.5022036515395,
+        "Y": -148.93670520458261
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Stream.Get",
+        "Id": "0e4b303e7da5451c8825f02c9b09056e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 10.594037905462585,
+        "Y": 193.30523111825789
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select",
+        "Id": "27bbb1ccd78d42db9d37129021cc76dd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -333.72280495476275,
+        "Y": 271.89048701812112
+      }
+    ],
+    "Annotations": [],
+    "X": 678.08331688030364,
+    "Y": 368.56626815558104,
+    "Zoom": 0.60498987240461
+  }
+}
