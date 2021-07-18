@@ -1,0 +1,639 @@
+{
+  "Uuid": "6ab90375-5d2d-4631-a334-637793f1ee6e",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Demo script",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "gcrump@bimguru.com.au",
+      "Id": "10f63474be564da28fd4285c9154a9a9",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b9084d5cc08241e282c748a495f2e413",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "Dynamo here!",
+      "Id": "9b0a370ab0594f5ea3bcdfc4833fcc89",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "68b8f938ddea419ea2bc7b437a2ca81d",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "Stage 1 complete",
+      "Id": "d51e0f3fbe3e429e98a836e83187b255",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ea8b015feeee48b380919541aed57e10",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "5776f3df-8827-4903-9a6f-eb6d6ff1bf42",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "5aff30aaeb654a8784dc55c7ffdc7dae",
+      "Inputs": [
+        {
+          "Id": "993e364fd62844a89b53ec79a8e0f5eb",
+          "Name": "to",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3facd886de554401916991830d60ffb2",
+          "Name": "subject",
+          "Description": "string\nDefault value : \"Subject\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c78cda492dd84b298fb7782bf0d8d70d",
+          "Name": "body",
+          "Description": "string\nDefault value : \"\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "53120099bb594e188c56fb777bf5152c",
+          "Name": "wasSent",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Given Outlook is open, this node will attempt to send an email to a list of recipients with a subject and body."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "61191973-0ee5-45de-949e-c4cb977e5b0d",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "11cf16abc26844408267d412b132b12d",
+      "Inputs": [
+        {
+          "Id": "0a47cdc5f18e4d81a72a69491b97cc13",
+          "Name": "data",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "713a6170df3a4d60b895ddc325e3215d",
+          "Name": "seconds",
+          "Description": "int\nDefault value : 1 (disabled)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4939eb7091534cecaed98deca7821a96",
+          "Name": "limit",
+          "Description": "int\nDefault value : 3",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6db7b2e4ea8e4d4bb3c84e3e42f32d40",
+          "Name": "data",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "47b995614e464aa78d9f5a6978d7120a",
+          "Name": "timedOut",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Given a duration in seconds and some data, this script will delay that data by the given time. A threshold of 3 seconds is used by default to stop an undesirable number being provided."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "15;",
+      "Id": "574ac83308a64716bd69f8d9ab8dc493",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "411a971e65044f968f043b98910218d5",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "8a176012-6eba-46df-8f41-6a40b2bb13a5",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "45a3835f8e3f46da968b7c1e68001f79",
+      "Inputs": [
+        {
+          "Id": "ae3307757dd54a28a4a90ef4924d1f19",
+          "Name": "data",
+          "Description": "Data to pass through\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9eef1e8616da4675a8c54c18e2c49ce3",
+          "Name": "waitFor",
+          "Description": "Data to wait for until\nthe upper stream can be\npassed.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8f2d3cacfb824359870ef392a1d6e187",
+          "Name": "data",
+          "Description": "Passed through data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Tells the first input to wait for the second input to arrive, then passes on the first input. Really useful for scripts which have branching paths that rely on their outputs to carry each other forward.\r\n\r\nQuite a few custom packages have a 'passthrough' or 'waitfor' node. I use these all the time, so find it useful to have them contained in this package also."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "Stage 2 complete",
+      "Id": "9e97f03f4b6c4942a1656c1622ad43cb",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3205d8d0479d4f14956a0765529a273f",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "Dynamo here!",
+      "Id": "3e066fae325a4878a5b0cfd451490c76",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "81874880d846451797138f969e69eac7",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "5776f3df-8827-4903-9a6f-eb6d6ff1bf42",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "64479c0c2a6f4e9e960361f2705b8daf",
+      "Inputs": [
+        {
+          "Id": "bc02d950bd854ce38a83bd6abf995a37",
+          "Name": "to",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3d77667fa01c4e5a8cc2b9645d34cf4a",
+          "Name": "subject",
+          "Description": "string\nDefault value : \"Subject\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "73b8f90feac2418b9c88dedeb4eb938d",
+          "Name": "body",
+          "Description": "string\nDefault value : \"\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "397f116a071c4572b3a0b94fc49c0729",
+          "Name": "wasSent",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Given Outlook is open, this node will attempt to send an email to a list of recipients with a subject and body."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "c1c01465-8e50-416b-909a-d9902aa0780b",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "fc0fcaf6393d4b669ab37213e2e5778a",
+      "Inputs": [
+        {
+          "Id": "6332174d1dcb4f32ac97d1e48b5a2345",
+          "Name": "title",
+          "Description": "Title of the UI.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d73d1ad1807d453c83a3c540c170d63d",
+          "Name": "body",
+          "Description": "Body text of the UI.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0f5fd8bcbbe34a8bbc0e2b1af7fc1af5",
+          "Name": "pass",
+          "Description": "Data to pass through\n\nvar[]..[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9646f3dc50c342dcb8abb513fa3f481a",
+          "Name": "result",
+          "Description": "Passed through data. If canceled, will be null.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Displays a message box with a title/body and OK/cancel button. If OK is selected, the third input's data will be passed through."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Script finished\";",
+      "Id": "3171b5815bcf494393ad58c9ff13a6db",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0889dfc4c0f942139e8e341fec05e0fd",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "b9084d5cc08241e282c748a495f2e413",
+      "End": "993e364fd62844a89b53ec79a8e0f5eb",
+      "Id": "3724b5176a884b92841919e2dc6cc400"
+    },
+    {
+      "Start": "b9084d5cc08241e282c748a495f2e413",
+      "End": "ae3307757dd54a28a4a90ef4924d1f19",
+      "Id": "7edf3cc8c5ed4c799609037d5f0e978f"
+    },
+    {
+      "Start": "68b8f938ddea419ea2bc7b437a2ca81d",
+      "End": "3facd886de554401916991830d60ffb2",
+      "Id": "f54948cfc3cc4b2b80d42f787370374a"
+    },
+    {
+      "Start": "ea8b015feeee48b380919541aed57e10",
+      "End": "c78cda492dd84b298fb7782bf0d8d70d",
+      "Id": "4f258de51c7b4ec68d0f0d4dd2742f0f"
+    },
+    {
+      "Start": "53120099bb594e188c56fb777bf5152c",
+      "End": "9eef1e8616da4675a8c54c18e2c49ce3",
+      "Id": "a098d13a049b4d12a31926e12645ec17"
+    },
+    {
+      "Start": "6db7b2e4ea8e4d4bb3c84e3e42f32d40",
+      "End": "bc02d950bd854ce38a83bd6abf995a37",
+      "Id": "147b0d8c3f1a476fbfd6ebb6048f154e"
+    },
+    {
+      "Start": "411a971e65044f968f043b98910218d5",
+      "End": "713a6170df3a4d60b895ddc325e3215d",
+      "Id": "0975d6a5302246358d2badcd280067b3"
+    },
+    {
+      "Start": "411a971e65044f968f043b98910218d5",
+      "End": "4939eb7091534cecaed98deca7821a96",
+      "Id": "ece2003d17614d95b7fc4be35e8f8bb9"
+    },
+    {
+      "Start": "8f2d3cacfb824359870ef392a1d6e187",
+      "End": "0a47cdc5f18e4d81a72a69491b97cc13",
+      "Id": "95dbac5baee441deb38918c548df6e33"
+    },
+    {
+      "Start": "3205d8d0479d4f14956a0765529a273f",
+      "End": "73b8f90feac2418b9c88dedeb4eb938d",
+      "Id": "ecab2a5747e446f1a2cd73fcfaafb2d1"
+    },
+    {
+      "Start": "81874880d846451797138f969e69eac7",
+      "End": "3d77667fa01c4e5a8cc2b9645d34cf4a",
+      "Id": "9ed1d2e3ac3d4facaec54b9fa462e6c7"
+    },
+    {
+      "Start": "397f116a071c4572b3a0b94fc49c0729",
+      "End": "0f5fd8bcbbe34a8bbc0e2b1af7fc1af5",
+      "Id": "71ec3b3ddf16424cb2b8d530c8822e62"
+    },
+    {
+      "Start": "0889dfc4c0f942139e8e341fec05e0fd",
+      "End": "6332174d1dcb4f32ac97d1e48b5a2345",
+      "Id": "666b9d49ad1c44f4a856d4ab6c3a4e15"
+    },
+    {
+      "Start": "0889dfc4c0f942139e8e341fec05e0fd",
+      "End": "d73d1ad1807d453c83a3c540c170d63d",
+      "Id": "87b102643bde44e9b33577353c78d4ec"
+    }
+  ],
+  "Dependencies": [
+    "5776f3df-8827-4903-9a6f-eb6d6ff1bf42",
+    "61191973-0ee5-45de-949e-c4cb977e5b0d",
+    "8a176012-6eba-46df-8f41-6a40b2bb13a5",
+    "c1c01465-8e50-416b-909a-d9902aa0780b"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Crumple",
+      "Version": "2021.5.27",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "5aff30aaeb654a8784dc55c7ffdc7dae",
+        "11cf16abc26844408267d412b132b12d",
+        "45a3835f8e3f46da968b7c1e68001f79",
+        "64479c0c2a6f4e9e960361f2705b8daf",
+        "fc0fcaf6393d4b669ab37213e2e5778a"
+      ]
+    }
+  ],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.1.11775",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "10f63474be564da28fd4285c9154a9a9",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 323.0,
+        "Y": 179.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "9b0a370ab0594f5ea3bcdfc4833fcc89",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 404.0,
+        "Y": 308.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "d51e0f3fbe3e429e98a836e83187b255",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 402.0,
+        "Y": 373.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© OutlookSend",
+        "Id": "5aff30aaeb654a8784dc55c7ffdc7dae",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 619.0,
+        "Y": 283.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© Delay",
+        "Id": "11cf16abc26844408267d412b132b12d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1282.0,
+        "Y": 238.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "574ac83308a64716bd69f8d9ab8dc493",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1060.0,
+        "Y": 303.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© WaitFor",
+        "Id": "45a3835f8e3f46da968b7c1e68001f79",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 950.0,
+        "Y": 185.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "9e97f03f4b6c4942a1656c1622ad43cb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1401.0,
+        "Y": 470.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "3e066fae325a4878a5b0cfd451490c76",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1403.0,
+        "Y": 405.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© OutlookSend",
+        "Id": "64479c0c2a6f4e9e960361f2705b8daf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1733.0,
+        "Y": 237.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© UIMessenger",
+        "Id": "fc0fcaf6393d4b669ab37213e2e5778a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2136.0,
+        "Y": 181.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "3171b5815bcf494393ad58c9ff13a6db",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1770.0,
+        "Y": 130.0
+      }
+    ],
+    "Annotations": [],
+    "X": 16.769300464485298,
+    "Y": 130.31826045449486,
+    "Zoom": 0.47191312545958908
+  }
+}

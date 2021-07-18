@@ -1,0 +1,534 @@
+{
+  "Uuid": "c635a32a-ee5f-443c-9163-d4c002eedc0a",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Merge files",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.IO.FileSystem.GetDirectoryContents@var,string,bool",
+      "Id": "ecbee6f3e17348d29b4b59934af2eb20",
+      "Inputs": [
+        {
+          "Id": "9a99f467dce54f808c869860ed391a91",
+          "Name": "directory",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5a62c6576f924c13ad192e30a6165c78",
+          "Name": "searchString",
+          "Description": "string\nDefault value : \"*.*\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3e7ada5d6a924fa39127c09188bf1afc",
+          "Name": "includeSubdirectories",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f3644ccf57ed4d8ca3aeae8ac5dfc8d0",
+          "Name": "files",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "82de56414fc44c98af90c297788b2472",
+          "Name": "directories",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "FileSystem.GetDirectoryContents (directory: var, searchString: string = \"*.*\", includeSubdirectories: bool = false): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "a1675cb4-1471-4b59-954f-dd72c7651db5",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "632124dde40c4b75b8a1d83c22cfec0a",
+      "Inputs": [
+        {
+          "Id": "aa8294414b864eb9bc230376ef2bc2eb",
+          "Name": "Refresh",
+          "Description": "Toggle to refresh\n\nbool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "431b89be0574436d8d3fe836de1cbe75",
+          "Name": "username",
+          "Description": "The active user's name",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c258c00051f34e2c81967c33cf7fb33a",
+          "Name": "My_Docs",
+          "Description": "The active user's My Documents path",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "This node returns the active username, as well as a path to the user's My Documents."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"*.csv\";\nfalse;",
+      "Id": "83d0e4c6b2cb4c20927a593352296793",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "628f2349b03848869633898330d16ca9",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "67b2f9b232e54e1abedf67ba55848769",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DirectoryObject, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "797c672177384b5796205534d312be2d",
+      "Inputs": [
+        {
+          "Id": "3697b5b15e19495588b549c81226c94f",
+          "Name": "path",
+          "Description": "Path to the directory.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1346c78dc4a44c56a8c6ad53d2b89785",
+          "Name": "directory",
+          "Description": "Directory object.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a directory object from a path"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSOffice.Data.ImportCSV@string,bool",
+      "Id": "3a785f926f0145caa5627df90e8958b6",
+      "Inputs": [
+        {
+          "Id": "4cb20c2970fa47328981b5637c7d9fcb",
+          "Name": "filePath",
+          "Description": "The CSV file to be converted into a list.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bd72a75ac08047978db0aefb5f165567",
+          "Name": "transpose",
+          "Description": "Whether the resulting list should be transposed.\n\nbool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9ea5f21a70464f71b11d446fe8f58a5d",
+          "Name": "list",
+          "Description": "The list containing the items in the CSV file.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Imports data from a CSV (comma separated values) file, put the items into a list and transpose it if needed.\n\nData.ImportCSV (filePath: string, transpose: bool = false): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "true;",
+      "Id": "99be20eb268e45c1b34eafff5f94ab85",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "85b82887bf3545b8af8d81591d65fcce",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Flatten@var[]..[],int",
+      "Id": "d8683c711480485886018ccb4b92b662",
+      "Inputs": [
+        {
+          "Id": "f568f5b29a9544bc8e77edaab9553ea2",
+          "Name": "list",
+          "Description": "List to flatten.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0947f4031f8e45a58e27ea315874b954",
+          "Name": "amt",
+          "Description": "Layers of nesting to remove.\n\nint\nDefault value : -1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4183d8ccf32f462a96f067e40f04c514",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Flattens a nested list of lists by a certain amount.\n\nList.Flatten (list: var[]..[], amt: int = -1): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSOffice.Data.ExportCSV@string,var[][]",
+      "Id": "1c8d9f11b3f64acb9392752e7c487d23",
+      "Inputs": [
+        {
+          "Id": "d939012a19154be5b7b5f6ff2519acac",
+          "Name": "filePath",
+          "Description": "Path to write to\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bcbd0c732dd6407cbc459301f00cf3ee",
+          "Name": "data",
+          "Description": "List of lists to write into CSV\n\nvar[][]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "56597ccb00b14f5d8672d92bcbbfde0b",
+          "Name": "void",
+          "Description": "void",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Write a list of lists into a file using a comma-separated values format. Outer list represents rows, inner lists represent columns.\n\nData.ExportCSV (filePath: string, data: var[][]): void"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "d + \"\\\\Combined.csv\";",
+      "Id": "147ff05fce3a444aac0075fcc1d121bc",
+      "Inputs": [
+        {
+          "Id": "22a098c4863b44c8bbd4a36fa326d218",
+          "Name": "d",
+          "Description": "d",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "491e368ce2c34757afd7068d9c6ccde9",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "f3644ccf57ed4d8ca3aeae8ac5dfc8d0",
+      "End": "4cb20c2970fa47328981b5637c7d9fcb",
+      "Id": "1a25eccebb0d4c9fb2fd7424ee0814d5"
+    },
+    {
+      "Start": "c258c00051f34e2c81967c33cf7fb33a",
+      "End": "3697b5b15e19495588b549c81226c94f",
+      "Id": "fe79f23600fc4c43976f5fb43d3c8bda"
+    },
+    {
+      "Start": "c258c00051f34e2c81967c33cf7fb33a",
+      "End": "22a098c4863b44c8bbd4a36fa326d218",
+      "Id": "a0f56995933d4ad0a46aa45a9928e42b"
+    },
+    {
+      "Start": "628f2349b03848869633898330d16ca9",
+      "End": "5a62c6576f924c13ad192e30a6165c78",
+      "Id": "743c5a817eaf459fb6ee526f298175c3"
+    },
+    {
+      "Start": "67b2f9b232e54e1abedf67ba55848769",
+      "End": "3e7ada5d6a924fa39127c09188bf1afc",
+      "Id": "49e12dc8a68c4858984f80db951e507b"
+    },
+    {
+      "Start": "1346c78dc4a44c56a8c6ad53d2b89785",
+      "End": "9a99f467dce54f808c869860ed391a91",
+      "Id": "850932806e5e49d69b405cb89ef4d483"
+    },
+    {
+      "Start": "9ea5f21a70464f71b11d446fe8f58a5d",
+      "End": "f568f5b29a9544bc8e77edaab9553ea2",
+      "Id": "5b5d1274b8ac4139a8981a1fb902272c"
+    },
+    {
+      "Start": "85b82887bf3545b8af8d81591d65fcce",
+      "End": "bd72a75ac08047978db0aefb5f165567",
+      "Id": "9f391b520ad845e48132b3afdc176636"
+    },
+    {
+      "Start": "4183d8ccf32f462a96f067e40f04c514",
+      "End": "bcbd0c732dd6407cbc459301f00cf3ee",
+      "Id": "c19fed4c0246449698a2c344b9a009ce"
+    },
+    {
+      "Start": "491e368ce2c34757afd7068d9c6ccde9",
+      "End": "d939012a19154be5b7b5f6ff2519acac",
+      "Id": "b6f0f1a9f3e242d39ad65a8852a0cc62"
+    }
+  ],
+  "Dependencies": [
+    "a1675cb4-1471-4b59-954f-dd72c7651db5"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Crumple",
+      "Version": "2021.5.27",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "632124dde40c4b75b8a1d83c22cfec0a"
+      ]
+    }
+  ],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.1.11775",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "FileSystem.GetDirectoryContents",
+        "Id": "ecbee6f3e17348d29b4b59934af2eb20",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 716.048472181559,
+        "Y": 32.758105213532872
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© UserDocuments",
+        "Id": "632124dde40c4b75b8a1d83c22cfec0a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 104.77228906428053,
+        "Y": -136.39522162759434
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "83d0e4c6b2cb4c20927a593352296793",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 517.48303763072533,
+        "Y": 98.929734035551917
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Directory From Path",
+        "Id": "797c672177384b5796205534d312be2d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 467.48499246788106,
+        "Y": 6.00821980131775
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Data.ImportCSV",
+        "Id": "3a785f926f0145caa5627df90e8958b6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1110.5428775127073,
+        "Y": 79.902175600481229
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "99be20eb268e45c1b34eafff5f94ab85",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 955.31257210899219,
+        "Y": 176.13454521032861
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Flatten",
+        "Id": "d8683c711480485886018ccb4b92b662",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1336.774760727242,
+        "Y": 79.902175600481314
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Data.ExportCSV",
+        "Id": "1c8d9f11b3f64acb9392752e7c487d23",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1671.2063751298263,
+        "Y": -105.07810951328861
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "147ff05fce3a444aac0075fcc1d121bc",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 806.25609232790134,
+        "Y": -103.69806236065256
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "0cad748fcbae4a9cb5c5fa0d2f33a8e4",
+        "Title": "Custom Node: Crumple v.2021.5.27",
+        "Nodes": [],
+        "Left": 112.15104066013868,
+        "Top": -177.54418129080952,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -36.665460300762788,
+    "Y": 348.66833616232941,
+    "Zoom": 0.8131456821731
+  }
+}
