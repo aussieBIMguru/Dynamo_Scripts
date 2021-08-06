@@ -1,0 +1,906 @@
+{
+  "Uuid": "0486ff70-abcc-4d50-8006-54d9c406915b",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "test2",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "9b4cfa8d-41dd-4e22-9962-488adf4bebe9",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "7260a2587b5c472b9b5a3f12426270d7",
+      "Inputs": [
+        {
+          "Id": "fc66dcee118f4459a4670b303d939203",
+          "Name": "Refresh",
+          "Description": "Toggle to refresh\n\nbool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5b521617d5ee48e892e8e816fb88c77e",
+          "Name": "views",
+          "Description": "All views in the current document.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns all views in the model. Excludes system views, templates, legends and schedule instances."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Made by Gavin Crump\r\n# Free for use\r\n# BIM Guru, www.bimguru.com.au\r\n\r\n# Boilerplate text\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager \r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk \r\nfrom Autodesk.Revit.DB import *\r\n\r\n# Current doc/app/ui\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\n# Define list/unwrap list functions\r\ndef uwlist(input):\r\n    result = input if isinstance(input, list) else [input]\r\n    return UnwrapElement(result)\r\n\r\n# Preparing input from dynamo to revit\r\nviewlist = uwlist(IN[0])\r\nalltrees, alldepths, hasparents = [], [], []\r\n\r\n# Main function\r\nfor v in viewlist:\r\n\t\r\n\tbreaker = 0\r\n\tcheckview = v\r\n\ttreedepth = 1\r\n\tviewtree = []\r\n\tgodeeper = True\r\n\t\r\n\twhile godeeper and breaker < 99:\r\n\t\r\n\t\tbreaker += 1\r\n\t\r\n\t\ttry:\r\n\t\t\tparentId = checkview.get_Parameter(BuiltInParameter.SECTION_PARENT_VIEW_NAME).AsElementId()\r\n\t\t\tcheckview = Document.GetElement(doc, parentId)\r\n\t\t\t\r\n\t\t\tif checkview != None:\r\n\t\t\t\ttreedepth += 1\r\n\t\t\t\tviewtree.append(checkview)\r\n\t\t\telse:\r\n\t\t\t\tgodeeper = False\r\n\t\texcept:\r\n\t\t\tgodeeper = False\r\n\t\t\t\r\n\talltrees.append(viewtree)\r\n\talldepths.append(treedepth)\r\n\thasparents.append(treedepth > 1)\r\n\r\n# Preparing output to Dynamo\r\nOUT = [alltrees, alldepths, hasparents]",
+      "VariableInputPorts": true,
+      "Id": "24ca6578ae404d3691745913a8791446",
+      "Inputs": [
+        {
+          "Id": "c9d06142774e4d2d868cdd26cda55635",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c2aa3d8cb46a4e33b154393282e09dc2",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "518d1971-29fd-4d37-8163-778d48690456",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "45dd0f48a65a4abf96b4c2d68e34952a",
+      "Inputs": [
+        {
+          "Id": "20a45b610cad48ddbb47a42b42bd75c3",
+          "Name": "views",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0352f2792c0441c1b61de388e33b60d3",
+          "Name": "parentView",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4ebae7b99b04420bac45c0faf0d27fbd",
+          "Name": "hasParent",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "68e4b23904e54e1c9f4b6e763e1ad455",
+          "Name": "onlyParents",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "For a view, return it's next related parent view if any. Will only retrieve one level above (even if it's parent has a parent etc.)."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "518d1971-29fd-4d37-8163-778d48690456",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "4ee49b385d5244e1a613a8de6de01069",
+      "Inputs": [
+        {
+          "Id": "7c27d375fd9c49568384835c70454765",
+          "Name": "views",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "64a31d79f2fd47f0a99ebe8c6fa6bf7c",
+          "Name": "parentView",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "91195851620545aca93157548aa7c30d",
+          "Name": "hasParent",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d7136f2eaaae4b098d26f4931a5c3d8c",
+          "Name": "onlyParents",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "For a view, return it's next related parent view if any. Will only retrieve one level above (even if it's parent has a parent etc.)."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "518d1971-29fd-4d37-8163-778d48690456",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "c3de4a9ffe9843899bd1bc84b181d771",
+      "Inputs": [
+        {
+          "Id": "2cbb70920c0d48a98cf9e615c49d0358",
+          "Name": "views",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7f52508959de4003afaddbfa06bc5b99",
+          "Name": "parentView",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "85cf29b2b74142a98f014c6d1692fe7f",
+          "Name": "hasParent",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2852acc065934e2da9df3b5eb6242aeb",
+          "Name": "onlyParents",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "For a view, return it's next related parent view if any. Will only retrieve one level above (even if it's parent has a parent etc.)."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "518d1971-29fd-4d37-8163-778d48690456",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "d5171406240447f8be0de1bb99ca6dd4",
+      "Inputs": [
+        {
+          "Id": "71d21c83ec6343d48fd5ffcd8f41330b",
+          "Name": "views",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "92999230109b42a793f672f7f9d7e401",
+          "Name": "parentView",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "022387b386544e549c3f9ac58c90ec7b",
+          "Name": "hasParent",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a73956edd50b467581e4104004ab5996",
+          "Name": "onlyParents",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "For a view, return it's next related parent view if any. Will only retrieve one level above (even if it's parent has a parent etc.)."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "518d1971-29fd-4d37-8163-778d48690456",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "5b4cbdd1d6e34d5181a4273523560d9f",
+      "Inputs": [
+        {
+          "Id": "96e8a673fe98430fb3b85d4dd21dbe43",
+          "Name": "views",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9077a5fc8c0b4d72b497f46d2b812605",
+          "Name": "parentView",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0d3fe63950294cb1870742a2ee4f2ee1",
+          "Name": "hasParent",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c79ec23160dc4cec9ce5c8149205eafb",
+          "Name": "onlyParents",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "For a view, return it's next related parent view if any. Will only retrieve one level above (even if it's parent has a parent etc.)."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "518d1971-29fd-4d37-8163-778d48690456",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "ce8c392ddae040619685bb29b3a6fea5",
+      "Inputs": [
+        {
+          "Id": "99f4029501164cd0a536f2cf9e264b98",
+          "Name": "views",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f5af0268e3e1407183959ecb88f1d3cd",
+          "Name": "parentView",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8a099123cc4149378f9a06525cfc92f6",
+          "Name": "hasParent",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a2c8cf539fe9456188075ca6994ea5d0",
+          "Name": "onlyParents",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "For a view, return it's next related parent view if any. Will only retrieve one level above (even if it's parent has a parent etc.)."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSVarArgFunction, DynamoCore",
+      "FunctionSignature": "DSCore.List.Join@var[]..[]",
+      "FunctionType": "VariableArgument",
+      "NodeType": "FunctionNode",
+      "Id": "6087544c400a415b853494dd41d1442b",
+      "Inputs": [
+        {
+          "Id": "23f7778faded4e1eaaa053d5db81ba69",
+          "Name": "list0",
+          "Description": "Lists to join into one.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "238d104e21c741c3b8a8f41a27bdd2f5",
+          "Name": "list1",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5582915445ef43d0ab98dc753a01f301",
+          "Name": "list2",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "07e78202b1824057bf178d04367481d6",
+          "Name": "list3",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ce7d44a8c21444c285eb43e57a234cb0",
+          "Name": "list4",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "623f814bb7014229a74fc75126e0a780",
+          "Name": "list5",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ffda6d4451b545baa04ff801592dcd06",
+          "Name": "list",
+          "Description": "Joined list.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Concatenates all given lists into a single list.\n\nList.Join (lists: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.UniqueItems@var[]..[]",
+      "Id": "976dd671adb048b28eb87ceafed81db4",
+      "Inputs": [
+        {
+          "Id": "26725cf19c2741369fd695e3fadabb31",
+          "Name": "list",
+          "Description": "List to filter duplicates out of.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "381545b04f1a4f409d4cfea7810e49ad",
+          "Name": "list",
+          "Description": "Filtered list.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates a new list containing all unique items in the given list.\n\nList.UniqueItems (list: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.UniqueItems@var[]..[]",
+      "Id": "fd2355adda4343919acaed699f0d1468",
+      "Inputs": [
+        {
+          "Id": "68bfdd6ca5254567b8558949a9d8b719",
+          "Name": "list",
+          "Description": "List to filter duplicates out of.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9f18fd099e384f46917bb5d051278dc9",
+          "Name": "list",
+          "Description": "Filtered list.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates a new list containing all unique items in the given list.\n\nList.UniqueItems (list: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "x[0];",
+      "Id": "44a72ed286964cdba1a5c09c4c3fc52b",
+      "Inputs": [
+        {
+          "Id": "15fb3db4f9144931815474c70e6a1a31",
+          "Name": "x",
+          "Description": "x",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "95c21e262de246ab8340cb28251391dc",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Flatten@var[]..[],int",
+      "Id": "1598e89215c84dff9ddd06436241ad31",
+      "Inputs": [
+        {
+          "Id": "8ae9167011eb4994931ae5cf7b3c8b3b",
+          "Name": "list",
+          "Description": "List to flatten.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2a59f3ba27a846458d018c09eca54a8b",
+          "Name": "amt",
+          "Description": "Layers of nesting to remove.\n\nint\nDefault value : -1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9fb94e136f8444e9ad0d5d467273b808",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Flattens a nested list of lists by a certain amount.\n\nList.Flatten (list: var[]..[], amt: int = -1): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "d0d9a38d-2cfe-474f-a07f-0fc6f218dc31",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "5d9b235dcdd54ac2a1bb850a213aa946",
+      "Inputs": [
+        {
+          "Id": "668b6e1ff8bd4f5fab0f0cbcba06bcf8",
+          "Name": "views",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b43bc2a4c9054417a8ee2873addb13b3",
+          "Name": "ancestry",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "48928a8130ff405593e74ee86e669ef7",
+          "Name": "generations",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2e6c6848d2e7436f895ac3925e05e694",
+          "Name": "hasAncestry",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the parent of a view, and the parent of that view, and the.... etc. Will also return if it had any parents, as well as the depth of the view's family tree."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "5b521617d5ee48e892e8e816fb88c77e",
+      "End": "c9d06142774e4d2d868cdd26cda55635",
+      "Id": "80f4394add3c47b688cdd96d7be0eb64"
+    },
+    {
+      "Start": "5b521617d5ee48e892e8e816fb88c77e",
+      "End": "20a45b610cad48ddbb47a42b42bd75c3",
+      "Id": "999c423ea0b64031a286976611b7afa0"
+    },
+    {
+      "Start": "5b521617d5ee48e892e8e816fb88c77e",
+      "End": "668b6e1ff8bd4f5fab0f0cbcba06bcf8",
+      "Id": "55215a18b5f44e14905db6369253229d"
+    },
+    {
+      "Start": "c2aa3d8cb46a4e33b154393282e09dc2",
+      "End": "15fb3db4f9144931815474c70e6a1a31",
+      "Id": "db77b7bf20a64f06903201aa6feab4dd"
+    },
+    {
+      "Start": "68e4b23904e54e1c9f4b6e763e1ad455",
+      "End": "7c27d375fd9c49568384835c70454765",
+      "Id": "e47661da31e64ad08a7c555703e1f4df"
+    },
+    {
+      "Start": "68e4b23904e54e1c9f4b6e763e1ad455",
+      "End": "23f7778faded4e1eaaa053d5db81ba69",
+      "Id": "bf9f7deaaae44237b11102d827d4bc30"
+    },
+    {
+      "Start": "d7136f2eaaae4b098d26f4931a5c3d8c",
+      "End": "2cbb70920c0d48a98cf9e615c49d0358",
+      "Id": "c589c45da0f6405fbce8055280e94d5c"
+    },
+    {
+      "Start": "d7136f2eaaae4b098d26f4931a5c3d8c",
+      "End": "238d104e21c741c3b8a8f41a27bdd2f5",
+      "Id": "f572b8062ad34a8b9ee523b4f977d15b"
+    },
+    {
+      "Start": "2852acc065934e2da9df3b5eb6242aeb",
+      "End": "71d21c83ec6343d48fd5ffcd8f41330b",
+      "Id": "14639e4a783e442c9f29121281426d2a"
+    },
+    {
+      "Start": "2852acc065934e2da9df3b5eb6242aeb",
+      "End": "5582915445ef43d0ab98dc753a01f301",
+      "Id": "2d0dcaa44d8f466ab638e99e2e52bc9a"
+    },
+    {
+      "Start": "a73956edd50b467581e4104004ab5996",
+      "End": "96e8a673fe98430fb3b85d4dd21dbe43",
+      "Id": "0e963db3b1f74c55b1f5c72f1dd90f4d"
+    },
+    {
+      "Start": "a73956edd50b467581e4104004ab5996",
+      "End": "07e78202b1824057bf178d04367481d6",
+      "Id": "688f43555dba47b5b416cf873075c54d"
+    },
+    {
+      "Start": "c79ec23160dc4cec9ce5c8149205eafb",
+      "End": "99f4029501164cd0a536f2cf9e264b98",
+      "Id": "2fdd419e3a83413c93fc92a0c666f1fc"
+    },
+    {
+      "Start": "c79ec23160dc4cec9ce5c8149205eafb",
+      "End": "ce7d44a8c21444c285eb43e57a234cb0",
+      "Id": "f3c40bedbf09494c856e23d16e4dc711"
+    },
+    {
+      "Start": "a2c8cf539fe9456188075ca6994ea5d0",
+      "End": "623f814bb7014229a74fc75126e0a780",
+      "Id": "69f7ed43202d428096349bada3b5655a"
+    },
+    {
+      "Start": "ffda6d4451b545baa04ff801592dcd06",
+      "End": "26725cf19c2741369fd695e3fadabb31",
+      "Id": "759985dc3b9f4ba68652742b1f198281"
+    },
+    {
+      "Start": "95c21e262de246ab8340cb28251391dc",
+      "End": "8ae9167011eb4994931ae5cf7b3c8b3b",
+      "Id": "b525579af2df43d3b92f6cea13b5ebbe"
+    },
+    {
+      "Start": "9fb94e136f8444e9ad0d5d467273b808",
+      "End": "68bfdd6ca5254567b8558949a9d8b719",
+      "Id": "db39d2149b7441e6ba93f9713870d269"
+    }
+  ],
+  "Dependencies": [
+    "9b4cfa8d-41dd-4e22-9962-488adf4bebe9",
+    "518d1971-29fd-4d37-8163-778d48690456",
+    "d0d9a38d-2cfe-474f-a07f-0fc6f218dc31"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Crumple",
+      "Version": "2021.8.4",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "7260a2587b5c472b9b5a3f12426270d7",
+        "45dd0f48a65a4abf96b4c2d68e34952a",
+        "4ee49b385d5244e1a613a8de6de01069",
+        "c3de4a9ffe9843899bd1bc84b181d771",
+        "d5171406240447f8be0de1bb99ca6dd4",
+        "5b4cbdd1d6e34d5181a4273523560d9f",
+        "ce8c392ddae040619685bb29b3a6fea5",
+        "5d9b235dcdd54ac2a1bb850a213aa946"
+      ]
+    }
+  ],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.1.11775",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "© Views",
+        "Id": "7260a2587b5c472b9b5a3f12426270d7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 512.0,
+        "Y": -29.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "24ca6578ae404d3691745913a8791446",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1043.1157300840682,
+        "Y": -163.98631466742336
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© ParentView",
+        "Id": "45dd0f48a65a4abf96b4c2d68e34952a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 775.40309322772146,
+        "Y": 206.09925140621374
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© ParentView",
+        "Id": "4ee49b385d5244e1a613a8de6de01069",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1074.3584306169212,
+        "Y": 258.72201213009157
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© ParentView",
+        "Id": "c3de4a9ffe9843899bd1bc84b181d771",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1361.9521729349433,
+        "Y": 311.6349569125249
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© ParentView",
+        "Id": "d5171406240447f8be0de1bb99ca6dd4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1658.574933658821,
+        "Y": 365.8090673476583
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© ParentView",
+        "Id": "5b4cbdd1d6e34d5181a4273523560d9f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1959.572663654787,
+        "Y": 420.4742206783024
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© ParentView",
+        "Id": "ce8c392ddae040619685bb29b3a6fea5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2267.65744886832,
+        "Y": 471.54563169092432
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Join",
+        "Id": "6087544c400a415b853494dd41d1442b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2704.9319584484892,
+        "Y": 168.27731958345225
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.UniqueItems",
+        "Id": "976dd671adb048b28eb87ceafed81db4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2894.4785361562504,
+        "Y": 168.71037689904819
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.UniqueItems",
+        "Id": "fd2355adda4343919acaed699f0d1468",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1690.3226494721218,
+        "Y": -164.3959491524634
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "44a72ed286964cdba1a5c09c4c3fc52b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1252.0221257169678,
+        "Y": -151.81959706360004
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Flatten",
+        "Id": "1598e89215c84dff9ddd06436241ad31",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1389.5308541772547,
+        "Y": -158.11997071741658
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "© ViewAncestry",
+        "Id": "5d9b235dcdd54ac2a1bb850a213aa946",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1971.3784166012169,
+        "Y": -339.27643892940443
+      }
+    ],
+    "Annotations": [],
+    "X": -1065.3871529856219,
+    "Y": 370.19089279627678,
+    "Zoom": 1.0365353738494159
+  }
+}
