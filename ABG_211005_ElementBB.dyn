@@ -1,0 +1,741 @@
+{
+  "Uuid": "65b8df99-5d55-4ff8-bacf-61ee00c190be",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Demo script",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "1e33ecff-42cd-41a3-8cac-d414dcc8fde9",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "efe7a1de238b4389aa6723ca71418539",
+      "Inputs": [
+        {
+          "Id": "0ba70c4335b44e87a21307eee8759035",
+          "Name": "element",
+          "Description": "element or Dynamo line\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e9045b424a784940b16f2618c94bb5da",
+          "Name": "Degree",
+          "Description": "Angle",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Calculates the rotation angle between the given element and the X axis.\r\nWorks for point/ line/ sketch based elements and link instances."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.ElementsInView, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "Id": "fc4127b38f3b491c8f61fa42a8dadfa1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5726aa54a1b64d608180b83e2db33c67",
+          "Name": "elements",
+          "Description": "All visible elements in the active view.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Get all the elements which are visible in the active view."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.BoundingBox",
+      "Id": "889da0b5de6d4fdbb608c992c88a2572",
+      "Inputs": [
+        {
+          "Id": "e9977589c943471ab2ce4d84568ee14f",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a409bfdd706f4746b93fe0e4c699d780",
+          "Name": "BoundingBox",
+          "Description": "BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get an Axis-aligned BoundingBox of the Element\n\nElement.BoundingBox: BoundingBox"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Solid.Centroid",
+      "Id": "d442830ad49e489dbe88b9aad7b93c10",
+      "Inputs": [
+        {
+          "Id": "2b4c26bdd1e7484cbd19ae730eb669b7",
+          "Name": "solid",
+          "Description": "Autodesk.DesignScript.Geometry.Solid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4c5ed1a35fcb47d2a1cc7a206beda656",
+          "Name": "Point",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "The centroid of the Solid\n\nSolid.Centroid ( ): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.BoundingBox.ToCuboid",
+      "Id": "ba7715840782459c8988e547d762567c",
+      "Inputs": [
+        {
+          "Id": "9310cf56fc31424e814c973e712ae0d1",
+          "Name": "boundingBox",
+          "Description": "Autodesk.DesignScript.Geometry.BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "eb770b27148e44728116ec7100cc8965",
+          "Name": "Cuboid",
+          "Description": "A Cuboid representation of the BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the BoundingBox as a Solid Cuboid\n\nBoundingBox.ToCuboid ( ): Cuboid"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.Solids",
+      "Id": "1971f56d00cc4da99013f8d92834cebd",
+      "Inputs": [
+        {
+          "Id": "9b5b2f0dc44347fc91a79d7ae1c4542f",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3ad9588bca0e48719c7ba44125578b25",
+          "Name": "Solid[]",
+          "Description": "Solid[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "The Solids in this Element\n\nElement.Solids: Solid[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Solid.ByUnion@Autodesk.DesignScript.Geometry.Solid[]",
+      "Id": "8ac3728192d24ab4b8041ba246cd5327",
+      "Inputs": [
+        {
+          "Id": "51561868ee7348b294fe79f897455580",
+          "Name": "solids",
+          "Description": "A collection of solids\n\nSolid[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "796a6c72b53049a7a859388dd9bb4b0d",
+          "Name": "Solid",
+          "Description": "Solid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Union a collection of solids into one solid\n\nSolid.ByUnion (solids: Solid[]): Solid"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Geometry.Rotate@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Vector,double",
+      "Id": "5d159c45ba2c4c678413c93dd5fe7f77",
+      "Inputs": [
+        {
+          "Id": "1a323095c9b34584ad03209b1be0b080",
+          "Name": "geometry",
+          "Description": "Autodesk.DesignScript.Geometry.Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "90372345a30a413dabd6a1f0e1f6b5b6",
+          "Name": "origin",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d088d7a49edb46e890ac16e48bd9fe33",
+          "Name": "axis",
+          "Description": "Vector",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "180d4d173587449285162a53a0b8ae0d",
+          "Name": "degrees",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c3c5db17a2aa4bc095c58a911c8511af",
+          "Name": "Geometry",
+          "Description": "Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Rotates an object around an origin and an axis by a specified degree\n\nGeometry.Rotate (origin: Point, axis: Vector, degrees: double = 0): Geometry"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Vector.ZAxis",
+      "Id": "b412945acecd44c0b88042f0b6ae53ee",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d8bb723beb054149a02118c378878f98",
+          "Name": "Vector",
+          "Description": "Vector",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the canonical Z axis Vector (0,0,1)\n\nVector.ZAxis ( ): Vector"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "x*-1;",
+      "Id": "3d91c2c079bf4054a9202c611a2dd477",
+      "Inputs": [
+        {
+          "Id": "efdd650a30454149a52a2fdaabaccfda",
+          "Name": "x",
+          "Description": "x",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cf637fb5a81f4ce3bab7d31c7675e475",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.BoundingBox.ToCuboid",
+      "Id": "7c9f2da8e8814637929f1cd98ceae6a0",
+      "Inputs": [
+        {
+          "Id": "b7576d8b6ef74882805a5592de54b39d",
+          "Name": "boundingBox",
+          "Description": "Autodesk.DesignScript.Geometry.BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "40b3c53b4784437283ec9c7b5d24e478",
+          "Name": "Cuboid",
+          "Description": "A Cuboid representation of the BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the BoundingBox as a Solid Cuboid\n\nBoundingBox.ToCuboid ( ): Cuboid"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Geometry.BoundingBox",
+      "Id": "b7d2e503c06346a9b090b73b6929078a",
+      "Inputs": [
+        {
+          "Id": "d3e65dff414546e79639b20502d1fe47",
+          "Name": "geometry",
+          "Description": "Autodesk.DesignScript.Geometry.Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "293773330be54893a299293db78e1483",
+          "Name": "BoundingBox",
+          "Description": "BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the BoundingBox containing the given piece of Geometry\n\nGeometry.BoundingBox: BoundingBox"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Geometry.Rotate@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Vector,double",
+      "Id": "26fdd29dacff444dac32a53f841dadda",
+      "Inputs": [
+        {
+          "Id": "7ba2ef769b4e429bbf12befae5e2b557",
+          "Name": "geometry",
+          "Description": "Autodesk.DesignScript.Geometry.Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "908fb2a908104c9f86e67048cad050c7",
+          "Name": "origin",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2fb9e3bb6ae446689078f9a4a443496e",
+          "Name": "axis",
+          "Description": "Vector",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "710a5af34e324db4b2e38185db9892aa",
+          "Name": "degrees",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fbd3ea2363814bb4947a4af02f01957b",
+          "Name": "Geometry",
+          "Description": "Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Rotates an object around an origin and an axis by a specified degree\n\nGeometry.Rotate (origin: Point, axis: Vector, degrees: double = 0): Geometry"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Vector.ZAxis",
+      "Id": "d5d76ecbcb9641cab945fe9bd87c8176",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b79fb0757fbe4422a5aab71ad9bcd37f",
+          "Name": "Vector",
+          "Description": "Vector",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the canonical Z axis Vector (0,0,1)\n\nVector.ZAxis ( ): Vector"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e9045b424a784940b16f2618c94bb5da",
+      "End": "efdd650a30454149a52a2fdaabaccfda",
+      "Id": "5a11e35bbfd342a1a26bb943d853bb4a"
+    },
+    {
+      "Start": "e9045b424a784940b16f2618c94bb5da",
+      "End": "710a5af34e324db4b2e38185db9892aa",
+      "Id": "bb2eb90d43934d20ba464152f3a06d28"
+    },
+    {
+      "Start": "5726aa54a1b64d608180b83e2db33c67",
+      "End": "0ba70c4335b44e87a21307eee8759035",
+      "Id": "fc1b8499a22f41c0bf9f5aedf8c71b01"
+    },
+    {
+      "Start": "5726aa54a1b64d608180b83e2db33c67",
+      "End": "e9977589c943471ab2ce4d84568ee14f",
+      "Id": "1c613a7246b84e94b693b2fff611c55a"
+    },
+    {
+      "Start": "5726aa54a1b64d608180b83e2db33c67",
+      "End": "9b5b2f0dc44347fc91a79d7ae1c4542f",
+      "Id": "223560ec1d2440329dc0aa05e3936695"
+    },
+    {
+      "Start": "a409bfdd706f4746b93fe0e4c699d780",
+      "End": "9310cf56fc31424e814c973e712ae0d1",
+      "Id": "96a3088465cf4ee29a53766e4a417f71"
+    },
+    {
+      "Start": "4c5ed1a35fcb47d2a1cc7a206beda656",
+      "End": "90372345a30a413dabd6a1f0e1f6b5b6",
+      "Id": "6a69cce1b5994c79a097b144569cdbec"
+    },
+    {
+      "Start": "4c5ed1a35fcb47d2a1cc7a206beda656",
+      "End": "908fb2a908104c9f86e67048cad050c7",
+      "Id": "141e7e4b463b4ceba25e1cd4885e6aef"
+    },
+    {
+      "Start": "eb770b27148e44728116ec7100cc8965",
+      "End": "2b4c26bdd1e7484cbd19ae730eb669b7",
+      "Id": "4be5f5d236174cef8bdaacf7d76922b7"
+    },
+    {
+      "Start": "3ad9588bca0e48719c7ba44125578b25",
+      "End": "51561868ee7348b294fe79f897455580",
+      "Id": "8bc9b85e59d04acd902b03f84abe7651"
+    },
+    {
+      "Start": "796a6c72b53049a7a859388dd9bb4b0d",
+      "End": "1a323095c9b34584ad03209b1be0b080",
+      "Id": "e281f760919d44be8f86fc48f29bcf77"
+    },
+    {
+      "Start": "c3c5db17a2aa4bc095c58a911c8511af",
+      "End": "d3e65dff414546e79639b20502d1fe47",
+      "Id": "40d9afa961394ddb9dce9edc91270583"
+    },
+    {
+      "Start": "d8bb723beb054149a02118c378878f98",
+      "End": "d088d7a49edb46e890ac16e48bd9fe33",
+      "Id": "7d5c0721328f463385c03a843db119b8"
+    },
+    {
+      "Start": "cf637fb5a81f4ce3bab7d31c7675e475",
+      "End": "180d4d173587449285162a53a0b8ae0d",
+      "Id": "0aed2a34422a44069b070c4590e8cf05"
+    },
+    {
+      "Start": "40b3c53b4784437283ec9c7b5d24e478",
+      "End": "7ba2ef769b4e429bbf12befae5e2b557",
+      "Id": "3f0f59c6511d47c6a1939fc90511f97c"
+    },
+    {
+      "Start": "293773330be54893a299293db78e1483",
+      "End": "b7576d8b6ef74882805a5592de54b39d",
+      "Id": "0d3a459ab817408486487dd10f1471d2"
+    },
+    {
+      "Start": "b79fb0757fbe4422a5aab71ad9bcd37f",
+      "End": "2fb9e3bb6ae446689078f9a4a443496e",
+      "Id": "7d40683bca724a4d804e3e7bfc6e4640"
+    }
+  ],
+  "Dependencies": [
+    "1e33ecff-42cd-41a3-8cac-d414dcc8fde9"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Genius Loci",
+      "Version": "2021.7.30",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "efe7a1de238b4389aa6723ca71418539"
+      ]
+    }
+  ],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.10.1.3976",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 6522.220703125,
+      "EyeY": 32566.33203125,
+      "EyeZ": 11725.6298828125,
+      "LookX": -5669.7822265625,
+      "LookY": -31816.33203125,
+      "LookZ": -14534.1630859375,
+      "UpX": -0.28442108631134033,
+      "UpY": 0.62251359224319458,
+      "UpZ": -0.72909647226333618
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Element GetRotation",
+        "Id": "efe7a1de238b4389aa6723ca71418539",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 444.0,
+        "Y": 247.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "All Elements In Active View",
+        "Id": "fc4127b38f3b491c8f61fa42a8dadfa1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 162.0,
+        "Y": 248.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.BoundingBox",
+        "Id": "889da0b5de6d4fdbb608c992c88a2572",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 448.0,
+        "Y": 361.0
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Solid.Centroid",
+        "Id": "d442830ad49e489dbe88b9aad7b93c10",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1025.0,
+        "Y": 363.0
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "BoundingBox.ToCuboid",
+        "Id": "ba7715840782459c8988e547d762567c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 742.0,
+        "Y": 363.0
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Element.Solids",
+        "Id": "1971f56d00cc4da99013f8d92834cebd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 462.97611566763931,
+        "Y": 7.7084975022312392
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Solid.ByUnion",
+        "Id": "8ac3728192d24ab4b8041ba246cd5327",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 713.421219525206,
+        "Y": 7.708497502231296
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Geometry.Rotate",
+        "Id": "5d159c45ba2c4c678413c93dd5fe7f77",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1450.5527906790353,
+        "Y": 13.229333046098446
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Vector.ZAxis",
+        "Id": "b412945acecd44c0b88042f0b6ae53ee",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1202.8245825909212,
+        "Y": 71.127650187837475
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "3d91c2c079bf4054a9202c611a2dd477",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1182.5736230818538,
+        "Y": 156.88810759781813
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "BoundingBox.ToCuboid",
+        "Id": "7c9f2da8e8814637929f1cd98ceae6a0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2032.7390470583225,
+        "Y": 12.537806475572381
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Geometry.BoundingBox",
+        "Id": "b7d2e503c06346a9b090b73b6929078a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1739.6568548385583,
+        "Y": 13.07775708370616
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Geometry.Rotate",
+        "Id": "26fdd29dacff444dac32a53f841dadda",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2468.3083175416436,
+        "Y": 167.44446507712155
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Vector.ZAxis",
+        "Id": "d5d76ecbcb9641cab945fe9bd87c8176",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2180.2268304159834,
+        "Y": 130.07257241468176
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "455782b6c4924c90b02c7bcab0bcd660",
+        "Title": "Custom Node: GeniusLoci v.2021.7.30",
+        "Nodes": [],
+        "Left": 444.0,
+        "Top": 212.0,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 14.102591185209576,
+    "Y": 197.49050770318013,
+    "Zoom": 0.576063091796033
+  }
+}
