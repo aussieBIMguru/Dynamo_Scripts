@@ -11,7 +11,7 @@
       "Id": "26b7984d8763445e964aaff91aad6b41",
       "Name": "File Path",
       "Type": "string",
-      "Value": "C:\\Users\\Gavin\\Desktop\\Book1.xlsx",
+      "Value": ".\\test.xlsx",
       "Description": "Allows you to select a file on the system to get its filename"
     },
     {
@@ -101,8 +101,8 @@
     },
     {
       "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
-      "HintPath": "C:\\Users\\Gavin\\Desktop\\Book1.xlsx",
-      "InputValue": "C:\\Users\\Gavin\\Desktop\\Book1.xlsx",
+      "HintPath": "C:\\Users\\Gavin\\Desktop\\test.xlsx",
+      "InputValue": ".\\test.xlsx",
       "NodeType": "ExtensionNode",
       "Id": "26b7984d8763445e964aaff91aad6b41",
       "Inputs": [],
@@ -764,56 +764,6 @@
       "Description": "Returns an item from the given list that's located at the specified index.\n\nList.GetItemAtIndex (list: var[]..[], index: int): var[]..[]"
     },
     {
-      "ConcreteType": "DSRevitNodesUI.ElementTypes, DSRevitNodesUI",
-      "SelectedIndex": 341,
-      "SelectedString": "Viewport",
-      "NodeType": "ExtensionNode",
-      "Id": "58cece2e410b4e7e834df532f66a749e",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "62cc9f5460ef4184a80b2eb9f8258b28",
-          "Name": "Types",
-          "Description": "The selected Types",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "All element subtypes."
-    },
-    {
-      "ConcreteType": "DSRevitNodesUI.ElementsOfType, DSRevitNodesUI",
-      "NodeType": "ExtensionNode",
-      "Id": "d88943563752482c89857e7acea74ba5",
-      "Inputs": [
-        {
-          "Id": "6ad4c71b070e4068b794d9510cbf4dbb",
-          "Name": "element type",
-          "Description": "An element type.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "2a45a153457d4c3b81c88d9f8b291ef3",
-          "Name": "elements",
-          "Description": "All elements in the active document of a given type.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "All elements in the active document of a given type."
-    },
-    {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
       "FunctionSignature": "Revit.Elements.Element.Name",
@@ -945,7 +895,7 @@
       "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
       "NodeType": "ExtensionNode",
       "InstanceId": [
-        "6d3acd40-53b7-41b4-9d96-72e9eaf4bc89-0005d6a5"
+        "5ffb942b-cca5-4726-80d2-46101b6660a2-0004b6f6"
       ],
       "Id": "42fe24251a3f47718f3fa0002edb6d4b",
       "Inputs": [],
@@ -1107,6 +1057,27 @@
       ],
       "Replication": "Auto",
       "Description": "This node will place the given view on the given sheet, if possible. For floor plan views: They cannot be on any other sheets. Now supports schedules!\n\nViewport.Create (sheet: Sheet, view: Element, location: Point): var[]..[]"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\n# Get viewports\r\nviewports = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Viewports).WhereElementIsNotElementType().ToElements()\r\n\r\n# Get valid viewport types\r\ntypes = [doc.GetElement(i) for i in viewports[0].GetValidTypes()]\r\n\r\nOUT = types",
+      "VariableInputPorts": true,
+      "Id": "81bcf551e3c8441b96473898205df555",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "adcfd9b2ae034bd7b060b2564e046883",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
     }
   ],
   "Connectors": [
@@ -1246,21 +1217,6 @@
       "Id": "db120ffa0a6348e78b78ab91135bf689"
     },
     {
-      "Start": "62cc9f5460ef4184a80b2eb9f8258b28",
-      "End": "6ad4c71b070e4068b794d9510cbf4dbb",
-      "Id": "250bfd3f2d5c4d89b4fe593a8ce2eed4"
-    },
-    {
-      "Start": "2a45a153457d4c3b81c88d9f8b291ef3",
-      "End": "4b43cffe71134af093c450801be5290a",
-      "Id": "128675212b0c4dc786d15a0509128795"
-    },
-    {
-      "Start": "2a45a153457d4c3b81c88d9f8b291ef3",
-      "End": "645a86281a8f4ec797116e91ee8410d7",
-      "Id": "7c5de8a15cca4221b0717383db1ced72"
-    },
-    {
       "Start": "632fc9abdbe6465ab1ed57c4c91c7e7c",
       "End": "587c68d5175a4b5b97c9172571d4d57a",
       "Id": "600951671fa84d2cad49197f00f587d0"
@@ -1299,6 +1255,16 @@
       "Start": "266dbdadad334d8b851fa1995d80dfd2",
       "End": "9295a18cd4074983bd543726a77ea220",
       "Id": "f5e4698230c44b829ecaafe6db51c4ba"
+    },
+    {
+      "Start": "adcfd9b2ae034bd7b060b2564e046883",
+      "End": "645a86281a8f4ec797116e91ee8410d7",
+      "Id": "3aa2110fbb6e431d8b9f93f5e0287497"
+    },
+    {
+      "Start": "adcfd9b2ae034bd7b060b2564e046883",
+      "End": "4b43cffe71134af093c450801be5290a",
+      "Id": "b6c85af2ac3647e2b085b0b5b5ac1c19"
     }
   ],
   "Dependencies": [],
@@ -1319,7 +1285,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.3.1.11775",
+      "Version": "2.6.1.8786",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -1568,26 +1534,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Element Types",
-        "Id": "58cece2e410b4e7e834df532f66a749e",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1502.7360694351883,
-        "Y": 954.77648115522834
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "All Elements of Type",
-        "Id": "d88943563752482c89857e7acea74ba5",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1677.4550849090501,
-        "Y": 955.47652287364417
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Element.Name",
         "Id": "6d53d35b467a43008c1c59753c310524",
         "IsSetAsInput": false,
@@ -1613,8 +1559,8 @@
         "IsSetAsInput": true,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1992.0583491143389,
-        "Y": 1148.25891392012
+        "X": 1945.7474149891209,
+        "Y": 1146.9724990833083
       },
       {
         "ShowGeometry": true,
@@ -1633,8 +1579,8 @@
         "IsSetAsInput": true,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2183.4745229974965,
-        "Y": -212.09445570356081
+        "X": 2184.5320178882225,
+        "Y": -215.26694037573975
       },
       {
         "ShowGeometry": true,
@@ -1675,6 +1621,16 @@
         "Excluded": false,
         "X": 3076.0933302123312,
         "Y": 332.0432319176777
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "81bcf551e3c8441b96473898205df555",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1742.7515489581428,
+        "Y": 953.58377256412177
       }
     ],
     "Annotations": [
@@ -1682,20 +1638,19 @@
         "Id": "bda9a2d95160419590f486f9b56ad81b",
         "Title": "Get viewport type by name",
         "Nodes": [
-          "58cece2e410b4e7e834df532f66a749e",
-          "d88943563752482c89857e7acea74ba5",
           "6d53d35b467a43008c1c59753c310524",
           "c46d253295e545b5aa882f09978c863e",
           "14329868e0c940a5b3e419d62c0ce045",
-          "80e80d694dd84ae7bc4294f9680d4f58"
+          "80e80d694dd84ae7bc4294f9680d4f58",
+          "81bcf551e3c8441b96473898205df555"
         ],
-        "Left": 1492.7360694351883,
-        "Top": 901.77648115522834,
-        "Width": 1156.7018201218598,
-        "Height": 314.48243276489166,
+        "Left": 1732.7515489581428,
+        "Top": 900.58377256412177,
+        "Width": 937.68634059890519,
+        "Height": 314.38872651918655,
         "FontSize": 36.0,
-        "InitialTop": 954.77648115522834,
-        "InitialHeight": 338.48243276489166,
+        "InitialTop": 953.58377256412177,
+        "InitialHeight": 337.19601792808,
         "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
@@ -1715,7 +1670,7 @@
         ],
         "Left": 102.92065367717714,
         "Top": 235.47082757082046,
-        "Width": 1573.0,
+        "Width": 1594.0,
         "Height": 345.0,
         "FontSize": 36.0,
         "InitialTop": 288.47082757082046,
@@ -1735,7 +1690,7 @@
         ],
         "Left": 768.8935188807443,
         "Top": 642.83168334256379,
-        "Width": 880.00144557005365,
+        "Width": 872.00144557005365,
         "Height": 231.97633426708308,
         "FontSize": 36.0,
         "InitialTop": 695.83168334256379,
@@ -1790,10 +1745,10 @@
           "766fb45e14454bf291c4decbdeff2c48",
           "199597c0afb34700b02423e199c3e134"
         ],
-        "Left": 2173.4745229974965,
+        "Left": 2174.5320178882225,
         "Top": -299.64905359847728,
-        "Width": 456.17417555226757,
-        "Height": 206.55459789491647,
+        "Width": 455.11668066154152,
+        "Height": 203.38211322273753,
         "FontSize": 36.0,
         "InitialTop": -246.64905359847728,
         "InitialHeight": 180.0,
@@ -1815,7 +1770,7 @@
         "Height": 232.71355982233968,
         "FontSize": 36.0,
         "InitialTop": 297.0432319176777,
-        "InitialHeight": 175.68484410628571,
+        "InitialHeight": 209.42520867513838,
         "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
@@ -1848,8 +1803,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -12.468852862464793,
-    "Y": 264.48817298313315,
-    "Zoom": 0.37609464238381707
+    "X": -15.337183379709145,
+    "Y": 252.62225615659221,
+    "Zoom": 0.40149593456411625
   }
 }
