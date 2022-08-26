@@ -1,0 +1,444 @@
+{
+  "Uuid": "b8dba642-7f32-473a-aa41-aecaaddf9da3",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "D1000",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "9407aed9f46941e2afc47060c0547f68",
+      "Name": "Catch lists bigger than...",
+      "Type": "number",
+      "Value": "100",
+      "NumberType": "Double",
+      "Description": "Creates a number."
+    }
+  ],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Made by Gavin Crump\r\n# Free for use\r\n# BIM Guru, www.bimguru.com.au\r\n# Made for fun only. Practice responsible data management\r\n\r\n# || Boilerplate text ||\r\nimport clr\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import *\r\n\r\nclr.AddReference('System.Speech')\r\nfrom System.Speech.Synthesis import SpeechSynthesizer\r\n\r\n# || Functions ||\r\n\r\n# Text to speech\r\ndef dynaTalk(txt,wait=False,vol=50,rate=1):\r\n\t# Cancel the speech\r\n\tSpeechSynthesizer.SpeakAsyncCancelAll\r\n\t# Make a new one\r\n\tss = SpeechSynthesizer\r\n\tss = SpeechSynthesizer()\r\n\tss.Volume = vol\r\n\tss.Rate = rate\r\n\tif wait:\r\n\t\tss.Speak(msg)\r\n\telse:\r\n\t\tss.SpeakAsync(msg)\r\n\treturn None\r\n\r\n# Check list depth\r\ndef depth(obj):\r\n\ttry:\r\n\t\treturn isinstance(obj, list) and max(map(depth, obj))+1\r\n\texcept:\r\n\t\treturn 0\r\n\r\n# Safeguard the object length in case it throws off the len function\r\ndef safeLen(obj):\r\n\ttry:\r\n\t\treturn len(IN[0])\r\n\texcept:\r\n\t\treturn 1\r\n\r\n# Initial check for list depth\r\nif hasattr(IN[0], '__iter__'):\r\n\tobjDep = depth(IN[0])\r\nelse:\r\n\tobjDep = 1\r\n\r\n# Easter egg jokebook\r\nif IN[0] == \"Tell me a joke\":\r\n\t# Make the book\r\n\tjokebook = []\r\n\r\n\tjokebook.append(\"A programmer goes to the shops with a shopping list. It says. Buy a loaf of bread, then if they have eggs, buy a dozen. They come home with thirteen loafs of bread.\")\r\n\tjokebook.append(\"Why do Python programmers wear glasses? Because they don't see sharp.\")\r\n\tjokebook.append(\"A programmer's wife is going out, and asks him if he can mow the lawn while she is out. When she gets back, he is relieved that he can finally stop mowing the lawn.\")\r\n\tjokebook.append(\"Why did the programmer quit? Because they didn't get arrays.\")\r\n\tjokebook.append(\"There are 1 type of people that understand binary.\")\r\n\tjokebook.append(\"Why do Python programmers hold their breath so well? They work below sea level\")\r\n\tjokebook.append(\"the secret to learning recursion is\"*5 + \". you get the idea\")\r\n\t\r\n\timport random\r\n\tind = random.randint(0, len(jokebook)-1)\r\n\tobj = \"Hahaha\"\r\n\tmsg = jokebook[ind]\r\n# Easter egg desperation\r\nelif IN[0] == \"I love you\":\r\n\tobj = \"<3\"\r\n\tmsg = \"I love me too.\"\r\n# Easter egg mean\r\nelif IN[0] == \"I hate you\":\r\n\tobj = \":@\"\r\n\tmsg = \"Is that what you say to the friends you don't have as well?\"\r\n# Now let's be serious\r\nelif objDep > 1:\r\n\tobj = IN[0]\r\n\tmsg = \"I see some nested lists. \" + str(objDep) + \" levels deep. My author got a bit lazy here. Let's keep this between us, OK?\"\r\n# Deal with noniterables\r\nelif not hasattr(IN[0], '__iter__'):\r\n\t# Is it a null\r\n\tif IN[0] == None:\r\n\t\tobj = []\r\n\t\tmsg = \"Nom nom nom, I eat nulls like you for breakfast.\"\r\n\t# Is it a string\r\n\telif isinstance(IN[0],str):\r\n\t\tif IN[0] == \"\":\r\n\t\t\tobj = IN[0]\r\n\t\t\tmsg = \"A programmer of few words it seems.\"\r\n\t\telse:\r\n\t\t\tobj = IN[0]\r\n\t\t\tmsg = \"A string. Technically itterable, but you don't trick me that easily.\"\r\n\t# Otherwise we pass it on\r\n\telse:\r\n\t\tobj = IN[0]\r\n\t\tmsg = \"Looks good to me. Thunderbird is go.\"\r\n# Catch if the object is too large\r\nelif safeLen(IN[0]) > int(IN[1]):\r\n\tobj = []\r\n\tmsg = \"My list is too big. \" + str(len(IN[0])) + \" objects for me, none for you.\"\r\n# Clean out nulls if found\r\nelif None in IN[0]:\r\n\tnewLst = []\r\n\tfor n in IN[0]:\r\n\t\tif n != None:\r\n\t\t\tnewLst.append(n)\r\n\tobj = newLst\r\n\tmsg = \"Looks like we have some nulls in there, let me remove those for you.\"\r\n# Empty list\r\nelif safeLen(IN[0]) < 1:\r\n\tobj = IN[0]\r\n\tmsg = \"That's an empty list, but you can have it.\"\r\n# No issues otherwise\r\nelse:\r\n\tobj = IN[0]\r\n\tmsg = \"Looks good to me. Thunderbirds are go.\"\r\n\r\ndynaTalk(msg,IN[2])\r\n\r\n# Get output\r\nOUT = obj",
+      "VariableInputPorts": true,
+      "Id": "2cf644340429486c8671b9dd6a81bae5",
+      "Inputs": [
+        {
+          "Id": "33895258105f48c0a6f4332cd0b7f689",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e1802176d9404e3da86a78dd29f50a34",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bff3edfad55444b59e69ff745fc36672",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "316472c885f9424487068777763102ce",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "InputValue": 100.0,
+      "Id": "9407aed9f46941e2afc47060c0547f68",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0dec1a05308144748f749225b6e7e031",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "data;",
+      "Id": "369054689262436a92ea8e8729e7080b",
+      "Inputs": [
+        {
+          "Id": "9554ff6c62544a559a6bd145f7405c9c",
+          "Name": "data",
+          "Description": "data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "111ad5a59f384736a9d128d804315b32",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "59d48108988b4fb78723c22d4f9efeac",
+      "Inputs": [
+        {
+          "Id": "132999bacbc640c0b15ccf3f2ecae6ae",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e8d93aa9dfc44fe7b3d8adfcde0b6ea7",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "df3440147d5940b2ba91df08db4a714e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "17987fff2aad465a88967b9871426179",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "// An OK piece of data\n5;\n[1,2,3];\n\n// Passes, but it notices\n\"Strings are iterable\";\n[];\n\"\";\n[[1,2,3],[4,5,6]];\n\n// Error catching\nnull;\n[1,2,3,null,4,5];\n1..1000..1;\n\n// Easter egg\n\"Tell me a joke\";\n\"I love you\";\n\"I hate you\";",
+      "Id": "10d3bdbda5804386afd5e008b238d3f3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a4edd136f76a4783bcf4b7a231a2e123",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1ceceab12a164ee291d5316362eb6f10",
+          "Name": "",
+          "Description": "Value of expression at line 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1af0df8a8e4a494ab0240784b37c67f2",
+          "Name": "",
+          "Description": "Value of expression at line 6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f0b597261f5349edaa017946c0642019",
+          "Name": "",
+          "Description": "Value of expression at line 7",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "59bd3d03391842e5a484dd1c01a83392",
+          "Name": "",
+          "Description": "Value of expression at line 8",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ca841a5f74f34fd3bb996fa95af6d39c",
+          "Name": "",
+          "Description": "Value of expression at line 9",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "698cfe383ea640f2acc2ca018e4e18e7",
+          "Name": "",
+          "Description": "Value of expression at line 12",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "81cfc70cc10643d0a40ee6745c60b9af",
+          "Name": "",
+          "Description": "Value of expression at line 13",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b3d7fcd086af4105bca766d138ea427b",
+          "Name": "",
+          "Description": "Value of expression at line 14",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e7b3a16f98474f7d99fa3738a0f6aed8",
+          "Name": "",
+          "Description": "Value of expression at line 17",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7355a2a159474b339c737a0d5c20194e",
+          "Name": "",
+          "Description": "Value of expression at line 18",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "de4a557525f74f44bce1eecf7185bbe8",
+          "Name": "",
+          "Description": "Value of expression at line 19",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "316472c885f9424487068777763102ce",
+      "End": "132999bacbc640c0b15ccf3f2ecae6ae",
+      "Id": "74a208db64db435196596fe8fefdfb3d"
+    },
+    {
+      "Start": "0dec1a05308144748f749225b6e7e031",
+      "End": "e1802176d9404e3da86a78dd29f50a34",
+      "Id": "5d295637682d4b2e8884f5d2fe857a38"
+    },
+    {
+      "Start": "111ad5a59f384736a9d128d804315b32",
+      "End": "33895258105f48c0a6f4332cd0b7f689",
+      "Id": "72aa645c08174360977e7add356236c1"
+    },
+    {
+      "Start": "17987fff2aad465a88967b9871426179",
+      "End": "bff3edfad55444b59e69ff745fc36672",
+      "Id": "36399973ff2c470db8ecd1b88d8ad36a"
+    },
+    {
+      "Start": "a4edd136f76a4783bcf4b7a231a2e123",
+      "End": "9554ff6c62544a559a6bd145f7405c9c",
+      "Id": "9222eef2e1ca4d5ba986079b655c9012"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.1.11775",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "D1000",
+        "Id": "2cf644340429486c8671b9dd6a81bae5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 979.493567462423,
+        "Y": 360.680150204039
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Catch lists bigger than...",
+        "Id": "9407aed9f46941e2afc47060c0547f68",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 710.86409359191441,
+        "Y": 386.78094871350766
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Your data here",
+        "Id": "369054689262436a92ea8e8729e7080b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 760.93971490013791,
+        "Y": 290.47392406724794
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "What you get from D1000",
+        "Id": "59d48108988b4fb78723c22d4f9efeac",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1188.6140921790918,
+        "Y": 360.03871028869435
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Wait for D1000 to finish talking?",
+        "Id": "df3440147d5940b2ba91df08db4a714e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 660.74512114550748,
+        "Y": 464.98220755926894
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Examples of inputs it can work with",
+        "Id": "10d3bdbda5804386afd5e008b238d3f3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 267.06677390786876,
+        "Y": 190.36620247861802
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "a136c74db4844dac8d65588ad4c47d31",
+        "Title": "D1000",
+        "Nodes": [
+          "2cf644340429486c8671b9dd6a81bae5",
+          "9407aed9f46941e2afc47060c0547f68",
+          "369054689262436a92ea8e8729e7080b",
+          "59d48108988b4fb78723c22d4f9efeac",
+          "df3440147d5940b2ba91df08db4a714e",
+          "74c1d3b54f8b4b4c908d0fdfefdb4a25"
+        ],
+        "Left": 650.74512114550748,
+        "Top": 237.47392406724794,
+        "Width": 717.86897103358433,
+        "Height": 295.508283492021,
+        "FontSize": 36.0,
+        "InitialTop": 290.47392406724794,
+        "InitialHeight": 272.508283492021,
+        "TextblockHeight": 43.0,
+        "Background": "#FF48B9FF"
+      },
+      {
+        "Id": "74c1d3b54f8b4b4c908d0fdfefdb4a25",
+        "Title": "Made for fun by Gavin Crump",
+        "Nodes": [],
+        "Left": 953.57294050737892,
+        "Top": 322.15809675652827,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -79.213136398391725,
+    "Y": -118.18761980516663,
+    "Zoom": 1.4263916465683204
+  }
+}
