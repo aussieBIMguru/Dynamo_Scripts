@@ -1,0 +1,374 @@
+{
+  "Uuid": "f34c2cc6-a21e-49f2-8a88-d841509cf0a8",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "CheckedOut",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementsSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "97bc6ca8-f349-48fc-b87b-c88782ddcce1-00000ace",
+        "97bc6ca8-f349-48fc-b87b-c88782ddcce1-00000af5",
+        "97bc6ca8-f349-48fc-b87b-c88782ddcce1-00000b16",
+        "97bc6ca8-f349-48fc-b87b-c88782ddcce1-00000b5b",
+        "2c495e69-45f5-4b28-8ae6-16ae544acef9-00000b7b",
+        "2c495e69-45f5-4b28-8ae6-16ae544acef9-00000bac"
+      ],
+      "Id": "2ba9a32ddb514377b50b52d7b0d4cb20",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "7197932760b04003ae68c9f111db2003",
+          "Name": "Elements",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Made by Gavin Crump\r\n# Free for use\r\n# BIM Guru, www.bimguru.com.au\r\n\r\n# Boilerplate text\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk \r\nfrom Autodesk.Revit.DB import CheckoutStatus, WorksharingUtils\r\n\r\n# Current doc/app/ui\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\n# Global constants\r\nOWNEDBYOTHERUSER = CheckoutStatus.OwnedByOtherUser\r\n\r\n# Define list/unwrap list functions\r\ndef uwlist(input):\r\n\tresult = input if isinstance(input, list) else [input]\r\n\treturn UnwrapElement(result)\r\n\r\n# Function to check if element is editable\r\ndef element_isEditable(element, myDoc = doc):\r\n\tcheckout_status = WorksharingUtils.GetCheckoutStatus(myDoc, element.Id)\r\n\treturn checkout_status != OWNEDBYOTHERUSER\r\n\r\n# Preparing input from dynamo to revit\r\nelements = uwlist(IN[0])\r\n\r\n# Preparing output to Dynamo\r\nOUT = [element_isEditable(e) for e in elements]",
+      "Engine": "IronPython2",
+      "EngineName": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "aadd0e6830f34d1798474351fe4c3e6a",
+      "Inputs": [
+        {
+          "Id": "098fce3f96eb430c840a297e4360320a",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "23cd474e73f04cedb8242a738b4024f0",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.FilterByBoolMask@var[]..[],var[]..[]",
+      "Id": "f20b6358a2ec42b1a3c653c531b0d277",
+      "Inputs": [
+        {
+          "Id": "5e354d151f044d9abaa8879ca106b1c8",
+          "Name": "list",
+          "Description": "List to filter.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "776589a61d62435fb162631273139f69",
+          "Name": "mask",
+          "Description": "List of booleans representing a mask.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4809449a47594d2fb89dab918816d26a",
+          "Name": "in",
+          "Description": "Items whose mask index is true.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a1082bebd40c4fc99b495fe705f2e63b",
+          "Name": "out",
+          "Description": "Items whose mask index is false.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Filters a sequence by looking up corresponding indices in a separate list of booleans.\n\nList.FilterByBoolMask (list: var[]..[], mask: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Made by Gavin Crump\r\n# Free for use\r\n# BIM Guru, www.bimguru.com.au\r\n\r\n# Boilerplate text\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk \r\nfrom Autodesk.Revit.DB import CheckoutStatus, WorksharingUtils\r\n\r\n# Current doc/app/ui\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\n# Global constants\r\nOWNEDBYOTHERUSER = CheckoutStatus.OwnedByOtherUser\r\n\r\n# Define list/unwrap list functions\r\ndef uwlist(input):\r\n\tresult = input if isinstance(input, list) else [input]\r\n\treturn UnwrapElement(result)\r\n\r\n# Function to check if element is editable\r\ndef element_isEditable(element, myDoc = doc):\r\n\tcheckout_status = WorksharingUtils.GetCheckoutStatus(myDoc, element.Id)\r\n\treturn checkout_status != OWNEDBYOTHERUSER\r\n\r\n# Preparing input from dynamo to revit\r\nelements = uwlist(IN[0])\r\n\r\n# Check elements\r\neditable, noneditable = [],[]\r\n\r\nfor e in elements:\r\n\tif element_isEditable(e):\r\n\t\teditable.append(e)\r\n\telse:\r\n\t\tnoneditable.append(e)\r\n\r\n# Preparing output to Dynamo\r\nOUT = editable, noneditable",
+      "Engine": "IronPython2",
+      "EngineName": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "85fc0682796945608b81a3a5fd015062",
+      "Inputs": [
+        {
+          "Id": "9cccae704954451699dc7bbf1d806f0a",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e1a249e526ee4cf698d6afcfbcdb4e45",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "editable    = OUT[0];\nnoneditable = OUT[1];",
+      "Id": "d78ce30ada9e43e89ea899199ebd170a",
+      "Inputs": [
+        {
+          "Id": "389707c6a7e44a4aa692b7f43f919bcd",
+          "Name": "OUT",
+          "Description": "OUT",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7e29be034faf47ed8d2c7c53895f2baf",
+          "Name": "",
+          "Description": "editable",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1f8799414842419c80376554186d6fc7",
+          "Name": "",
+          "Description": "noneditable",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "eb7c9dc9397f41109acceaf2f748dc6f",
+      "Inputs": [
+        {
+          "Id": "e4857ac5e1f24e17b595c932a8a7cde7",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "893ef37dad0a4fc4b07cc79138b8700e",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "7197932760b04003ae68c9f111db2003",
+      "End": "098fce3f96eb430c840a297e4360320a",
+      "Id": "db75f248a26647098041a1e43eb227b7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "7197932760b04003ae68c9f111db2003",
+      "End": "5e354d151f044d9abaa8879ca106b1c8",
+      "Id": "ccb6525432e6421d9abd0c3ca0d5e0d0",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "7197932760b04003ae68c9f111db2003",
+      "End": "9cccae704954451699dc7bbf1d806f0a",
+      "Id": "19843d8fe35041c48f2f9ebadf40e8e5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "23cd474e73f04cedb8242a738b4024f0",
+      "End": "776589a61d62435fb162631273139f69",
+      "Id": "648756eb036240de8601f8869e2bf7f7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e1a249e526ee4cf698d6afcfbcdb4e45",
+      "End": "389707c6a7e44a4aa692b7f43f919bcd",
+      "Id": "7654a78fa0484270bcb3ee7179b77770",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1f8799414842419c80376554186d6fc7",
+      "End": "e4857ac5e1f24e17b595c932a8a7cde7",
+      "Id": "9ded43256f6b4617a493f020b479e7c0",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.17",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "4.0",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.17.1.4055",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Name": "Select Model Elements",
+        "ShowGeometry": true,
+        "Id": "2ba9a32ddb514377b50b52d7b0d4cb20",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 392.32027648407973,
+        "Y": -81.558749843150991
+      },
+      {
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Id": "aadd0e6830f34d1798474351fe4c3e6a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 858.02215480290124,
+        "Y": 227.32878457984521
+      },
+      {
+        "Name": "List.FilterByBoolMask",
+        "ShowGeometry": true,
+        "Id": "f20b6358a2ec42b1a3c653c531b0d277",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1121.8451608477774,
+        "Y": 124.5662653713544
+      },
+      {
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Id": "85fc0682796945608b81a3a5fd015062",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1176.5228992285727,
+        "Y": -82.696998262807938
+      },
+      {
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Id": "d78ce30ada9e43e89ea899199ebd170a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1404.6668320945937,
+        "Y": -82.452652726832468
+      },
+      {
+        "Name": "Watch",
+        "ShowGeometry": true,
+        "Id": "eb7c9dc9397f41109acceaf2f748dc6f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1819.4445700900317,
+        "Y": -123.44712233375321
+      }
+    ],
+    "Annotations": [],
+    "X": 35.688659377762974,
+    "Y": 322.44800952846094,
+    "Zoom": 0.60122796620338848
+  }
+}
