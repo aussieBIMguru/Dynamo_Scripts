@@ -1,0 +1,523 @@
+{
+  "Uuid": "7b4166d9-db26-4394-a3a5-7caa652229ec",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Sheet creation",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "4ecbeb5631e5473f9527430d11a0554d",
+      "Name": "File Path",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "C:\\Users\\Gavin\\Desktop\\Sheet details.xlsx",
+      "Description": "Allows you to select a file on the system and returns its file path",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "397fcbd92f5f4b2db586ea96137ec61c",
+      "Name": "Worksheet",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Sheet1",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "5b0b167633c44e2ca0e4af7ca157d72c",
+      "Name": "Use titleblock from sheet...",
+      "Type": "selection",
+      "Type2": "dropdownSelection",
+      "Value": "Unnamed",
+      "Description": "All sheets available in the current document.",
+      "SelectedIndex": 12
+    },
+    {
+      "Id": "86a7bad9c14e4b7882d2b423b535a5b8",
+      "Name": "Update existing sheet data?",
+      "Type": "boolean",
+      "Type2": "boolean",
+      "Value": "true",
+      "Description": "Enables selection between True and False",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "0e152fda0c4e456d8b64d9e6729f37a6",
+      "Name": "Sheets created/found",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSOffice.Data.OpenXMLImportExcel@string,string,int,int,bool",
+      "Id": "d298c752d40f435fa66f2db6d9e81055",
+      "Inputs": [
+        {
+          "Id": "a12c3310d60344cf9dc79c0090455aff",
+          "Name": "filePath",
+          "Description": "File representing the Excel workbook\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b0ab352eb7a34eb9acf791b5c87d388b",
+          "Name": "sheetName",
+          "Description": "Name of the worksheet containing data\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "abcb3c5197ac4fc68633db3ade820a46",
+          "Name": "startRow",
+          "Description": "Start row for reading data. Enter 0 for Row 1, 1 for Row 2, etc.\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9014d512eab8438e8a5e6c82856795b0",
+          "Name": "startColumn",
+          "Description": "Start column for reading data. Enter 0 for Column A, 1 for Column B, etc.\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4a4bd05298214582b1a4a1c79045bb32",
+          "Name": "readAsString",
+          "Description": "Toggle to read cells as strings\n\nbool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f61852e3f2c5477b98319bcbd7bf35e5",
+          "Name": "data",
+          "Description": "Rows of data from the Excel worksheet",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Read data from a Microsoft Excel spreadsheet by using the Open XML standard. Data is read by row and returned in a series of lists by row. Rows and columns are zero-indexed; for example, the value in cell A1 will appear in the data list at [0,0].\n\nData.OpenXMLImportExcel (filePath: string, sheetName: string, startRow: int = 0, startColumn: int = 0, readAsString: bool = false): var[][]"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "C:\\Users\\Gavin\\Desktop\\Sheet details.xlsx",
+      "InputValue": "C:\\Users\\Gavin\\Desktop\\Sheet details.xlsx",
+      "NodeType": "ExtensionNode",
+      "Id": "4ecbeb5631e5473f9527430d11a0554d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6b2133fbf34e47eba974765570dea1b3",
+          "Name": "",
+          "Description": "File Path",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system and returns its file path"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "Sheet1",
+      "Id": "397fcbd92f5f4b2db586ea96137ec61c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9151395c3ac24fdaa1f11c598dfd12da",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "0;\n0;\ntrue;",
+      "Id": "9e109165abb2434eb2adb12271454c6d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "052ef176b09546c78454dbabe0a2fb95",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "130dd371411442199b4369220c9e6a12",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0d72e1abe0f6490cb64ff216588e47d6",
+          "Name": "",
+          "Description": "Value of expression at line 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Sheets, DSRevitNodesUI",
+      "SelectedIndex": 12,
+      "SelectedString": "Unnamed",
+      "NodeType": "ExtensionNode",
+      "Id": "5b0b167633c44e2ca0e4af7ca157d72c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "103528650bbd41a3ab712b4c1a7e570c",
+          "Name": "Sheet",
+          "Description": "The selected Sheet",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All sheets available in the current document."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "86a7bad9c14e4b7882d2b423b535a5b8",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "62023e7540f440699fbab8562154c4dd",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Made by Gavin Crump\r\n# Free for use\r\n# BIM Guru, www.bimguru.com.au\r\n\r\n# Boilerplate text\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk \r\nfrom Autodesk.Revit.DB import *\r\n\r\n# Current doc/app/ui\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\n# Preparing input from dynamo to revit\r\nexcel_data = IN[0][1:]\r\nsheet_reference = UnwrapElement(IN[1])\r\nupdate_sheets = IN[2]\r\n\r\n# Get the title block\r\nBIC_TTB = BuiltInCategory.OST_TitleBlocks\r\n\r\nttb_id = FilteredElementCollector(doc, sheet_reference.Id).\\\r\n\t\t OfCategory(BIC_TTB).FirstElement().GetTypeId()\r\n\r\nsheets_all = FilteredElementCollector(doc).\\\r\n\t\t\t OfClass(ViewSheet).ToElements()\r\n\r\nnumbers_all = [s.SheetNumber for s in sheets_all]\r\n\r\n# Create and modify sheets\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\n\r\nsheets_out = []\r\n\r\nfor row in excel_data:\r\n\t# Get row data\r\n\tsheet_numb = row[0]\r\n\tsheet_name = row[1]\r\n\tsheet_sort = row[2]\r\n\t# If it exists, get the sheet\r\n\tif sheet_numb in numbers_all:\r\n\t\t# Get the sheet\r\n\t\tind = numbers_all.index(sheet_numb)\r\n\t\tsheet = sheets_all[ind]\r\n\t\tsheets_out.append(sheet)\r\n\t\t# If not updating, make the sheet none\r\n\t\tif not update_sheets:\r\n\t\t\tsheet = None\r\n\t# If it doesn't, create sheet\r\n\telse:\r\n\t\tsheet = ViewSheet.Create(doc, ttb_id)\r\n\t\tsheets_out.append(sheet)\r\n\t\tsheet.SheetNumber = sheet_numb\r\n\t# If we want to update, go for it!\r\n\tif sheet:\r\n\t\tsheet.Name = sheet_name\r\n\t\ttry:\r\n\t\t\tpar = sheet.LookupParameter(\"SORT\")\r\n\t\t\tpar.Set(sheet_sort)\r\n\t\texcept:\r\n\t\t\tpass\r\n\r\nTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Preparing output to Dynamo\r\nOUT = sheets_out",
+      "Engine": "IronPython2",
+      "EngineName": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "d9175a8b75a64edbb5a456740c6dbb78",
+      "Inputs": [
+        {
+          "Id": "2dc90db4a7f34d3196815f2a9b8d8662",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "264c666357dc43f88999e9e77f43d7fc",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0505a86c2b884a70a39a4233897bc882",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4b8769391a4748538b3a3549738bd9e4",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "0e152fda0c4e456d8b64d9e6729f37a6",
+      "Inputs": [
+        {
+          "Id": "912ec935ded34d29bbf597d7fab35813",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "25a1fe1c04b64d54a07a720f504b84c1",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "f61852e3f2c5477b98319bcbd7bf35e5",
+      "End": "2dc90db4a7f34d3196815f2a9b8d8662",
+      "Id": "935e20b5c4df404c87ca2023c8e71d0d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "6b2133fbf34e47eba974765570dea1b3",
+      "End": "a12c3310d60344cf9dc79c0090455aff",
+      "Id": "f7a87b69833c4c14b206fdc61f8dca30",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9151395c3ac24fdaa1f11c598dfd12da",
+      "End": "b0ab352eb7a34eb9acf791b5c87d388b",
+      "Id": "b16e36bebd574abeb0aa7dc1ae0b6ca3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "052ef176b09546c78454dbabe0a2fb95",
+      "End": "abcb3c5197ac4fc68633db3ade820a46",
+      "Id": "098a86c0e73f42dcab4d32d7f56ad04f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "130dd371411442199b4369220c9e6a12",
+      "End": "9014d512eab8438e8a5e6c82856795b0",
+      "Id": "81d6fbef2b244a8b84966d5921011227",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0d72e1abe0f6490cb64ff216588e47d6",
+      "End": "4a4bd05298214582b1a4a1c79045bb32",
+      "Id": "87b366e5727442e7ab7971514e40ca54",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "103528650bbd41a3ab712b4c1a7e570c",
+      "End": "264c666357dc43f88999e9e77f43d7fc",
+      "Id": "4ee7d83ef37d4dfa87fad00e7638e51d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "62023e7540f440699fbab8562154c4dd",
+      "End": "0505a86c2b884a70a39a4233897bc882",
+      "Id": "9d97c64f68804a0f97b56de8c84740fe",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4b8769391a4748538b3a3549738bd9e4",
+      "End": "912ec935ded34d29bbf597d7fab35813",
+      "Id": "b7af4d7bbcb844aaa93b1b5494193375",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Sheet details.xlsx",
+      "ReferenceType": "External",
+      "Nodes": [
+        "4ecbeb5631e5473f9527430d11a0554d"
+      ]
+    }
+  ],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.17",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "4.0",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.17.1.4055",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Name": "Data.OpenXMLImportExcel",
+        "ShowGeometry": true,
+        "Id": "d298c752d40f435fa66f2db6d9e81055",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 737.0,
+        "Y": 264.0
+      },
+      {
+        "Name": "File Path",
+        "ShowGeometry": true,
+        "Id": "4ecbeb5631e5473f9527430d11a0554d",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 237.0,
+        "Y": 158.0
+      },
+      {
+        "Name": "Worksheet",
+        "ShowGeometry": true,
+        "Id": "397fcbd92f5f4b2db586ea96137ec61c",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 450.0,
+        "Y": 296.0
+      },
+      {
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Id": "9e109165abb2434eb2adb12271454c6d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 452.0,
+        "Y": 425.0
+      },
+      {
+        "Name": "Use titleblock from sheet...",
+        "ShowGeometry": true,
+        "Id": "5b0b167633c44e2ca0e4af7ca157d72c",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1132.0,
+        "Y": 387.0
+      },
+      {
+        "Name": "Update existing sheet data?",
+        "ShowGeometry": true,
+        "Id": "86a7bad9c14e4b7882d2b423b535a5b8",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1128.0,
+        "Y": 519.0
+      },
+      {
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Id": "d9175a8b75a64edbb5a456740c6dbb78",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1577.0,
+        "Y": 262.0
+      },
+      {
+        "Name": "Sheets created/found",
+        "ShowGeometry": true,
+        "Id": "0e152fda0c4e456d8b64d9e6729f37a6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "X": 1902.0,
+        "Y": 261.0
+      }
+    ],
+    "Annotations": [],
+    "X": -935.1840089948073,
+    "Y": 81.141447941394631,
+    "Zoom": 0.70823125000000009
+  }
+}

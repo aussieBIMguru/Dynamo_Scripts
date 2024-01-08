@@ -1,0 +1,227 @@
+{
+  "Uuid": "5b0eb04d-1dcd-462a-9e55-64154905455b",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Unhide script final",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "f7ccf3c99cb04f40bf31d640d33224da",
+      "Name": "Choose run mode",
+      "Type": "selection",
+      "Type2": "dropdownSelection",
+      "Value": "Just report elements",
+      "Description": "A dropdown menu with customizable values.",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "8022b8f3510b4de28bde04fe84bc5d1e",
+      "Name": "Hidden elements",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.CustomSelection, CoreNodeModels",
+      "SerializedItems": [
+        {
+          "Name": "Just report elements",
+          "Item": "1"
+        },
+        {
+          "Name": "Select the elements (stay in hidden mode)",
+          "Item": "2"
+        },
+        {
+          "Name": "Unhide the elements in view",
+          "Item": "3"
+        }
+      ],
+      "SelectedIndex": 0,
+      "SelectedString": "Just report elements",
+      "NodeType": "ExtensionNode",
+      "Id": "f7ccf3c99cb04f40bf31d640d33224da",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5d7e3bcd2d3d417ebf2bbfbff9f65e33",
+          "Name": "Value",
+          "Description": "The selected Value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A dropdown menu with customizable values."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Made by Gavin Crump\r\n# Free for use\r\n# BIM Guru, www.bimguru.com.au\r\n\r\n# Boilerplate text\r\nimport clr\r\n\r\nimport System\r\nfrom System.Collections.Generic import List\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\n# Current doc/app/ui\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuiapp = DocumentManager.Instance.CurrentUIApplication \r\nuidoc = uiapp.ActiveUIDocument\r\n\r\nview_current = doc.ActiveView\r\n\r\n# Preparing input from dynamo to revit\r\nrun_mode = IN[0]\r\n\r\nVIEW_HIDETEMP = TemporaryViewMode.TemporaryHideIsolate\r\nVIEW_HIDEELEM = TemporaryViewMode.RevealHiddenElements\r\n\r\n# Enable view modes\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\n\r\nview_current.DisableTemporaryViewMode(VIEW_HIDETEMP)\r\nview_current.EnableRevealHiddenMode()\r\n\r\nTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Get elements in view, check if hidden\r\nelements_hidden = []\r\n\r\nelements = FilteredElementCollector(doc, view_current.Id).\\\r\n\t\t   WhereElementIsNotElementType().ToElements()\r\n\r\nfor e in elements:\r\n\ttry:\r\n\t\te.Category\r\n\t\tif e.IsHidden(view_current):\r\n\t\t\telements_hidden.append(e)\r\n\texcept:\r\n\t\tpass\r\n\r\n# Unhide or select\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\n\r\nif run_mode != 2:\r\n\tview_current.DisableTemporaryViewMode(VIEW_HIDEELEM)\r\n\r\nif len(elements_hidden) > 0:\r\n\t# Make a list of ids\r\n\tids_hidden = List[ElementId]()\r\n\t# Add each element to the list\r\n\tfor e in elements_hidden:\r\n\t\tids_hidden.Add(e.Id)\r\n\t# Option 3 - unhide\r\n\tif run_mode == 3:\r\n\t\tview_current.UnhideElements(ids_hidden)\r\n\t# Else, option 2 - select\r\n\telse:\r\n\t\tuidoc.Selection.SetElementIds(ids_hidden)\r\n\r\nTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Preparing output to Dynamo\r\nOUT = elements_hidden",
+      "Engine": "IronPython2",
+      "EngineName": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "b067fb4525114fc2811e96b854cb2562",
+      "Inputs": [
+        {
+          "Id": "82608b05fa364832ae4207648dd967dd",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c0acf41742ed4a1896cb683a3aff8427",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "8022b8f3510b4de28bde04fe84bc5d1e",
+      "Inputs": [
+        {
+          "Id": "68e997c5aac540f58ec90563fb30382a",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "317ec0ff62a1402e836d6d075395bb19",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "5d7e3bcd2d3d417ebf2bbfbff9f65e33",
+      "End": "82608b05fa364832ae4207648dd967dd",
+      "Id": "c1dc960762934c8c9ae89d140b4cb6d7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c0acf41742ed4a1896cb683a3aff8427",
+      "End": "68e997c5aac540f58ec90563fb30382a",
+      "Id": "73b03f7dac254edaad1aa9b2ef6e9594",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.17",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "4.0",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.17.1.4055",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Name": "Choose run mode",
+        "ShowGeometry": true,
+        "Id": "f7ccf3c99cb04f40bf31d640d33224da",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 96.5,
+        "Y": 166.0
+      },
+      {
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Id": "b067fb4525114fc2811e96b854cb2562",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 570.0,
+        "Y": 166.0
+      },
+      {
+        "Name": "Hidden elements",
+        "ShowGeometry": true,
+        "Id": "8022b8f3510b4de28bde04fe84bc5d1e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "X": 882.0,
+        "Y": 167.0
+      }
+    ],
+    "Annotations": [],
+    "X": -9.0,
+    "Y": 6.0,
+    "Zoom": 1.0
+  }
+}
